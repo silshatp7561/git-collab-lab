@@ -196,7 +196,10 @@
                                         {% elif post.id in voted_post_ids %}
                                             <div class="note">Already voted for this post</div>
                                         {% else %}
-                                            <a class="vote-btn" href="{% url 'cast_vote' candidate.id %}">Cast Vote</a>
+                                            <form method="post" action="{% url 'cast_vote' candidate.id %}" style="display:inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="vote-btn">Cast Vote</button>
+                                            </form>
                                         {% endif %}
                                     {% endif %}
                                 </div>

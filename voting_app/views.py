@@ -1,23 +1,13 @@
-from django.shortcuts import render
-
-# Create your views here.
 import hashlib
 import secrets
-from .models import Voter
-from django.shortcuts import render, redirect
-from .blockchain import Blockchain
-from .models import Election
-from django.shortcuts import render, redirect
-from .models import Voter, Election
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import logout
-from .models import Voter
-from django.shortcuts import render, redirect
-from .models import Election, Post
-from .models import Post, Candidate
-from .models import Block
+from django.db import transaction
+from django.db.models import Count, Sum
+from django.views.decorators.http import require_POST
 
-blockchain = Blockchain()
+from .models import Block, Candidate, Election, Post, Voter
 
 
 def generate_wallet():
@@ -67,16 +57,18 @@ def admin_logout(request):
     return redirect('home')
 
 @staff_member_required(login_url='admin:login')
+@require_POST
 def approve_voter(request, voter_id):
-    voter = Voter.objects.get(id=voter_id)
+    voter = get_object_or_404(Voter, id=voter_id)
     voter.approved = True
     voter.save()
     return redirect('admin_dashboard')
 
 
 @staff_member_required(login_url='admin:login')
+@require_POST
 def toggle_election(request, election_id):
-    election = Election.objects.get(id=election_id)
+    election = get_object_or_404(Election, id=election_id)
     election.is_active = not election.is_active
     election.save()
     return redirect('admin_dashboard')
@@ -151,14 +143,6 @@ def create_candidate(request):
 
     return render(request, 'create_candidate.html', {'posts': posts})  
 
-
-
-
-
-from django.shortcuts import render, redirect
-from .models import Voter, Election, Post, Candidate
-from django.db import models
-
 def voter_login(request):
     request.session['show_navbar'] = True
 
@@ -190,15 +174,14 @@ def voter_logout(request):
     return redirect('home')
 
 
-
-
-from .models import Election
-
 def voter_dashboard(request):
     if not request.session.get("wallet"):
         return redirect("voter_login")
 
-    voter = Voter.objects.get(wallet_address=request.session["wallet"])
+    voter = Voter.objects.filter(wallet_address=request.session["wallet"]).first()
+    if not voter:
+        request.session.pop('wallet', None)
+        return redirect("voter_login")
     active_elections = Election.objects.filter(is_active=True).order_by("name")
 
     return render(request, "voter_dashboard.html", {
@@ -206,18 +189,19 @@ def voter_dashboard(request):
         "active_elections": active_elections,
     })
 
-
-
-
-
-
+@require_POST
 def cast_vote(request, candidate_id):
     if 'wallet' not in request.session:
         return redirect('voter_login')
 
     wallet = request.session['wallet']
 
-    candidate = Candidate.objects.get(id=candidate_id)
+    candidate = get_object_or_404(Candidate, id=candidate_id)
+
+    voter = Voter.objects.filter(wallet_address=wallet, approved=True).first()
+    if not voter:
+        request.session.pop('wallet', None)
+        return redirect('voter_login')
 
     # Ensure election is active
     if not candidate.post.election.is_active:
@@ -226,27 +210,30 @@ def cast_vote(request, candidate_id):
         })
 
     # Prevent double voting for the same post (allow voting across different posts)
-    if Block.objects.filter(voter_wallet=wallet, candidate__post=candidate.post).exists():
-        return render(request, 'vote_error.html', {
-            'error': "You have already voted for this post!"
-        })
+    with transaction.atomic():
+        # Serialize vote writes per wallet to avoid duplicate votes from concurrent requests.
+        Voter.objects.select_for_update().filter(id=voter.id).first()
 
-    # Get last block
-    last_block = Block.objects.order_by('-id').first()
-    previous_hash = last_block.hash if last_block else "0"
+        if Block.objects.filter(voter_wallet=wallet, candidate__post=candidate.post).exists():
+            return render(request, 'vote_error.html', {
+                'error': "You have already voted for this post!"
+            })
 
-    # Simulate gas used for this transaction (simple deterministic pseudo-gas)
-    import secrets
-    gas_sim = 21000 + (secrets.randbelow(4000))
+        # Get last block
+        last_block = Block.objects.select_for_update().order_by('-id').first()
+        previous_hash = last_block.hash if last_block else "0"
 
-    block = Block(
-        voter_wallet=wallet,
-        candidate=candidate,
-        previous_hash=previous_hash,
-        gas_used=gas_sim
-    )
+        # Simulate gas used for this transaction
+        gas_sim = 21000 + (secrets.randbelow(4000))
 
-    block.save()
+        block = Block(
+            voter_wallet=wallet,
+            candidate=candidate,
+            previous_hash=previous_hash,
+            gas_used=gas_sim
+        )
+
+        block.save()
     # After saving, check if voter has now voted for all posts in this election
     election = candidate.post.election
     posts = Post.objects.filter(election=election)
@@ -262,11 +249,6 @@ def cast_vote(request, candidate_id):
         'election': election,
         'all_voted': all_voted,
     })
-
-
-
-from django.db.models import Count
-from .models import Block
 
 def results_view(request):
     elections = Election.objects.order_by('-is_active', 'name')
@@ -285,11 +267,12 @@ def results_view(request):
 
     # Count votes per candidate
     results = vote_rows.values(
+        'candidate_id',
         'candidate__name',
         'candidate__post__name',
         'candidate__department',
         'candidate__semester',
-    ).annotate(total_votes=Count('id')).order_by('candidate__post__name', '-total_votes', 'candidate__name')
+    ).annotate(total_votes=Count('id')).order_by('candidate__post__name', '-total_votes', 'candidate__name', 'candidate_id')
 
     # Add rank per post (same votes share same rank)
     ranked_results = []
@@ -343,7 +326,7 @@ def blockchain_view(request):
     total_transactions = transactions.count()
     vote_transactions = transactions.count()
     latest_block = transactions.first()
-    total_gas = transactions.aggregate(total=models.Sum('gas_used'))['total'] or 0
+    total_gas = transactions.aggregate(total=Sum('gas_used'))['total'] or 0
 
     return render(request, 'blockchain.html', {
         'active_elections': active_elections,
@@ -354,11 +337,8 @@ def blockchain_view(request):
         'latest_block_number': latest_block.id if latest_block else 0,
     })
 
-
-from .models import Post
-
 def view_election(request, election_id):
-    election = Election.objects.get(id=election_id)
+    election = get_object_or_404(Election, id=election_id)
     posts = Post.objects.filter(election=election)
 
     # all candidates for these posts (template may also use post.candidate_set)

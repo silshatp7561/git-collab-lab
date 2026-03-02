@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 import hashlib
 import json
-from django.utils import timezone
 
 
 # Voter Model

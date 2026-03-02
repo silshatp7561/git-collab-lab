@@ -63,7 +63,10 @@
                     <td>{{ election.name }}</td>
                     <td>{% if election.is_active %}<span class="badge active">Active</span>{% else %}<span class="badge inactive">Inactive</span>{% endif %}</td>
                     <td>
-                        <a href="{% url 'toggle_election' election.id %}" class="btn {% if election.is_active %}btn-warn{% else %}btn-success{% endif %}">{% if election.is_active %}Deactivate{% else %}Activate{% endif %}</a>
+                        <form method="post" action="{% url 'toggle_election' election.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn {% if election.is_active %}btn-warn{% else %}btn-success{% endif %}">{% if election.is_active %}Deactivate{% else %}Activate{% endif %}</button>
+                        </form>
                     </td>
                 </tr>
                 {% empty %}
@@ -81,7 +84,10 @@
                     <td>{% if voter.approved %}<span class="badge active">Approved</span>{% else %}<span class="badge inactive">Pending</span>{% endif %}</td>
                     <td>
                         {% if not voter.approved %}
-                            <a href="{% url 'approve_voter' voter.id %}" class="btn btn-success">Approve</a>
+                            <form method="post" action="{% url 'approve_voter' voter.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
                         {% else %}
                             -
                         {% endif %}
