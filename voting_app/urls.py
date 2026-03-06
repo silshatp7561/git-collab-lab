@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('admin-logout/', views.admin_logout, name='admin_logout'),
     path('approve-voter/<int:voter_id>/', views.approve_voter, name='approve_voter'),
+    path('remove-voter/<int:voter_id>/', views.remove_voter, name='remove_voter'),
     path('create-election/', views.create_election, name='create_election'),
     path("create-post/", views.create_post, name="create_post"),
     path('create-candidate/', views.create_candidate, name='create_candidate'),
