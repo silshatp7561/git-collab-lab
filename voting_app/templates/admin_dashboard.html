@@ -57,29 +57,64 @@
                 <a href="/create-election/" class="btn btn-primary">+ New Election</a>
             </div>
             <table>
-                <tr><th>Election</th><th>Status</th><th>Action</th></tr>
+                <tr><th>Election</th><th>Status</th><th>Voting</th><th>Results</th><th>Action</th></tr>
                 {% for election in elections %}
                 <tr>
                     <td>{{ election.name }}</td>
                     <td>{% if election.is_active %}<span class="badge active">Active</span>{% else %}<span class="badge inactive">Inactive</span>{% endif %}</td>
                     <td>
+                        {% if election.voting_completed %}
+                            <span class="badge active">Completed</span>
+                        {% else %}
+                            <span class="badge inactive">In Progress</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if election.results_published and not election.results_hidden %}
+                            <span class="badge active">Published</span>
+                        {% elif election.results_hidden %}
+                            <span class="badge inactive">Hidden</span>
+                        {% else %}
+                            <span class="badge inactive">Not Published</span>
+                        {% endif %}
+                    </td>
+                    <td>
                         <form method="post" action="{% url 'toggle_election' election.id %}" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn {% if election.is_active %}btn-warn{% else %}btn-success{% endif %}">{% if election.is_active %}Deactivate{% else %}Activate{% endif %}</button>
+                            <button type="submit" class="btn {% if election.is_active %}btn-warn{% else %}btn-success{% endif %}" style="margin-bottom:4px;">{% if election.is_active %}Deactivate{% else %}Activate{% endif %}</button>
                         </form>
+                        {% if not election.voting_completed %}
+                            <form method="post" action="{% url 'mark_completed' election.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary" style="margin-bottom:4px;">Mark Completed</button>
+                            </form>
+                        {% endif %}
+                        {% if election.voting_completed and not election.results_published %}
+                            <form method="post" action="{% url 'publish_results' election.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success" style="margin-bottom:4px;">Publish Results</button>
+                            </form>
+                        {% endif %}
+                        {% if election.results_published %}
+                            <form method="post" action="{% url 'hide_results' election.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warn" style="margin-bottom:4px;">Hide Results</button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="3">No elections created.</td></tr>
+                <tr><td colspan="5">No elections created.</td></tr>
                 {% endfor %}
             </table>
         </div>
         <div class="card">
             <div class="section-title"><h2>Registered Voters</h2></div>
             <table>
-                <tr><th>Wallet Address</th><th>Status</th><th>Action</th></tr>
+                <tr><th>Email</th><th>Wallet Address</th><th>Status</th><th>Action</th></tr>
                 {% for voter in voters %}
                 <tr>
+                    <td>{{ voter.email|default:"-" }}</td>
                     <td style="word-break:break-all">{{ voter.wallet_address }}</td>
                     <td>{% if voter.approved %}<span class="badge active">Approved</span>{% else %}<span class="badge inactive">Pending</span>{% endif %}</td>
                     <td>
@@ -88,13 +123,15 @@
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success">Approve</button>
                             </form>
-                        {% else %}
-                            -
                         {% endif %}
+                        <form method="post" action="{% url 'remove_voter' voter.id %}" style="display:inline; margin-left:8px;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warn" onclick="return confirm('Remove this voter?')">Remove</button>
+                        </form>
                     </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="3">No voters registered.</td></tr>
+                <tr><td colspan="4">No voters registered.</td></tr>
                 {% endfor %}
             </table>
         </div>
