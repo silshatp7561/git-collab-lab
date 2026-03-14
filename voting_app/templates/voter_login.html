@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Voter Login - BlockVote</title>
+    <title>Login - BlockVote</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -20,7 +20,9 @@
             width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
         h2 { text-align: center; margin-bottom: 25px; }
-        input {
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
             width: 100%; padding: 12px; margin-bottom: 15px;
             border: 1px solid #cbd5e1; border-radius: 6px;
         }
@@ -31,6 +33,51 @@
         }
         button:hover { background: #1e40af; }
         .error { color: #dc2626; margin-bottom: 15px; text-align: center; }
+        
+        .user-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        .user-type-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .user-type-label input[type="radio"] {
+            width: auto;
+            margin: 0;
+            cursor: pointer;
+        }
+        .admin-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .admin-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .admin-link a:hover {
+            text-decoration: underline;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #475569;
+        }
+        .register-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -51,21 +98,48 @@
 
 <div class="container">
     <div class="card">
-        <h2>Voter Login</h2>
+        <h2>Login</h2>
 
         {% if error %}
             <div class="error">{{ error }}</div>
         {% endif %}
 
-        <form method="POST">
+        <form method="POST" id="loginForm">
             {% csrf_token %}
+            
+            <div class="user-type-selector">
+                <label class="user-type-label">
+                    <input type="radio" name="user_type" value="voter" checked>
+                    Voter
+                </label>
+                <label class="user-type-label">
+                    <input type="radio" name="user_type" value="admin">
+                    Admin
+                </label>
+            </div>
+
             <input type="email" name="email" placeholder="Enter Email" required>
             <input type="password" name="password" placeholder="Enter Password" required>
             <input type="text" name="wallet" placeholder="Enter Wallet Address" required>
             <button type="submit">Login</button>
+            
+            <div class="register-link">
+                Don't have an account? <a href="{% url 'register' %}">Register here</a>
+            </div>
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        const userType = document.querySelector('input[name="user_type"]:checked').value;
+        
+        if (userType === 'admin') {
+            e.preventDefault();
+            window.location.href = '/admin-login/';
+        }
+    });
+</script>
 
 </body>
 </html>

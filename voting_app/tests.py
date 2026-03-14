@@ -2,8 +2,8 @@ from django.contrib.auth.hashers import make_password
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Block, Candidate, Election, Post, PublishedResult, Voter
-
+from voting_app.models import Block, Candidate, Election, Post, PublishedResult, Voter
+from django.contrib.auth.hashers import check_password
 
 class VotingTests(TestCase):
     def setUp(self):
@@ -56,6 +56,8 @@ class VotingTests(TestCase):
         self.assertEqual(second_vote.context["all_voted"], True)
 
 
+
+
 class ResultsTests(TestCase):
     def setUp(self):
         self.election = Election.objects.create(name="CS Election", is_active=True)
@@ -105,3 +107,60 @@ class ResultsTests(TestCase):
 
         leader = response.context["leading_candidate"]
         self.assertEqual(leader["candidate__name"], "Alice")
+
+
+class RegistrationTests(TestCase):
+    """
+    Test Case ID: TC_REG_01
+    Objective: Verify that a new user can register successfully in the system.
+    """
+    def setUp(self):
+        Voter.objects.all().delete()  # Ensure clean state
+
+    def test_register_successful(self):
+        # Steps:
+        # 1. (Open website) - Django test client simulates
+        # 2. (Navigate to Registration) - reverse('register')
+        # 3. Enter valid details
+        # 4. Click Register
+        response = self.client.post(reverse('register'), {
+            'email': 'testuser@example.com',
+            'password': 'testpass123'
+        })
+
+        # Expected: New user account created, confirmation shown
+        self.assertEqual(Voter.objects.count(), 1)
+        voter = Voter.objects.first()
+        self.assertEqual(voter.email, 'testuser@example.com')
+        self.assertTrue(check_password('testpass123', voter.password_hash))
+        self.assertTrue(voter.wallet_address.startswith('0x'))
+        self.assertIn('registered', response.context)
+        self.assertTrue(response.context['registered'])
+
+
+class VoterLogoutTests(TestCase):
+    """
+    Test Case ID: TC_LOGOUT_01
+    Objective: Verify that a logged-in user can log out of the system.
+    """
+    def setUp(self):
+        Voter.objects.all().delete()
+        self.voter = Voter.objects.create(
+            email='logoutuser@example.com',
+            password_hash=make_password('pass'),
+            wallet_address='0xtestwallet',
+            approved=True
+        )
+        # Simulate logged-in session
+        session = self.client.session
+        session['wallet'] = self.voter.wallet_address
+        session.save()
+
+    def test_logout_clears_session_redirects_home(self):
+        # Steps:
+        # 1. (Logged in) - session set in setUp
+        # 2. Click Logout
+        response = self.client.get(reverse('voter_logout'))
+
+        # Expected: Logged out (no wallet in session), redirect to home/login
+        self.assertRedirects(response, reverse('home'))

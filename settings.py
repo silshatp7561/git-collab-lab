@@ -117,3 +117,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Admin Configuration
+ADMIN_WALLET_ADDRESS = "0xadmin1234567890abcdef1234567890abcdef12345678"
+
