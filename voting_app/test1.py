@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Voter, Election, Post, Candidate, Block
+from voting_app.models import Voter, Election, Post, Candidate, Block
 
 class VotingSystemAdditionalTests(TestCase):
     def setUp(self):
