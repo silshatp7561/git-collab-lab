@@ -9,7 +9,7 @@ class SimpleCandidateTest(TestCase):
     """
 
     def setUp(self):
-        # Create election and post
+        
         self.election = Election.objects.create(
             name="Test Election",
             is_active=True
@@ -20,13 +20,13 @@ class SimpleCandidateTest(TestCase):
         )
 
     def test_candidate_creation(self):
-        # Step: Create candidate
+        
         candidate = Candidate.objects.create(
             name="John Doe",
             post=self.post
         )
 
-        # Expected Results
+        
         self.assertEqual(Candidate.objects.count(), 1)
         self.assertEqual(candidate.name, "John Doe")
         self.assertEqual(candidate.post.name, "President")
