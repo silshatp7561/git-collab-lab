@@ -105,3 +105,51 @@ class ResultsTests(TestCase):
 
         leader = response.context["leading_candidate"]
         self.assertEqual(leader["candidate__name"], "Alice")
+
+class BlockchainIntegrityTests(TestCase):
+    def setUp(self):
+        from voting_app.models import Election, Post, Candidate, Block
+        self.election = Election.objects.create(name="Test Election")
+        self.post = Post.objects.create(name="Test Post", election=self.election)
+        self.candidate1 = Candidate.objects.create(name="Candidate 1", post=self.post)
+        self.candidate2 = Candidate.objects.create(name="Candidate 2", post=self.post)
+
+    def test_block_hash_calculation(self):
+        """Test that a block's hash is correctly calculated based on its contents."""
+        block = Block.objects.create(
+            voter_wallet="0x123",
+            candidate=self.candidate1,
+            previous_hash="0"
+        )
+        self.assertEqual(block.hash, block.calculate_hash())
+        
+    def test_blockchain_chaining(self):
+        """Test that multiple blocks form a valid chain using previous_hash."""
+        block1 = Block.objects.create(
+            voter_wallet="0x123",
+            candidate=self.candidate1,
+            previous_hash="0"
+        )
+        block2 = Block.objects.create(
+            voter_wallet="0x456",
+            candidate=self.candidate2,
+            previous_hash=block1.hash
+        )
+        
+        self.assertEqual(block2.previous_hash, block1.hash)
+        
+    def test_blockchain_tampering_detection(self):
+        """Test that altering block data changes its computed hash, invalidating it."""
+        block = Block.objects.create(
+            voter_wallet="0x123",
+            candidate=self.candidate1,
+            previous_hash="0"
+        )
+        original_hash = block.hash
+        
+        # Tamper with the block data
+        block.voter_wallet = "0xHACKER_WALLET"
+        tampered_hash = block.calculate_hash()
+        
+        # The newly calculated hash should not match the established hash
+        self.assertNotEqual(original_hash, tampered_hash)
