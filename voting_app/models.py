@@ -21,7 +21,9 @@ class Voter(models.Model):
 class Election(models.Model):
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False)
+    voting_completed = models.BooleanField(default=False)
     results_published = models.BooleanField(default=False)
+    results_hidden = models.BooleanField(default=False)
     results_published_with_contract = models.BooleanField(default=False)
     result_publish_tx = models.CharField(max_length=120, blank=True, default="")
     result_hash = models.CharField(max_length=80, blank=True, default="")
