@@ -3,7 +3,6 @@ from django.utils import timezone
 import hashlib
 import json
 
-app_label = 'voting_app'
 # Voter Model
 class Voter(models.Model):
     email = models.EmailField(unique=True, null=True, blank=True)
