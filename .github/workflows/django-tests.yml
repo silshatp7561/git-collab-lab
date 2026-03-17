@@ -27,6 +27,6 @@ jobs:
 
       - name: Run Django tests
         run: |
-          cd voting_project
+          ls
           python manage.py migrate
           python manage.py test
