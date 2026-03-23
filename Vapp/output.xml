@@ -1,0 +1,2293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.2 on win32)" generated="2026-03-24T19:51:50.674639" rpa="false" schemaversion="5">
+<suite id="s1" name="Perfect 13 Pass" source="C:\Users\ADMIN\OneDrive\Desktop\miniproject_block\git-collab-lab-aleena-modified-full-project\tests\perfect_13_pass.robot">
+<kw name="Create Session" owner="RequestsLibrary" type="SETUP">
+<msg time="2026-03-24T19:51:50.893802" level="INFO">Creating Session using : alias=voting, url=http://127.0.0.1:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>voting</arg>
+<arg>http://127.0.0.1:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-24T19:51:50.893606" elapsed="0.000392"/>
+</kw>
+<test id="s1-t1" name="Test Home" line="8">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:50.900334" level="INFO">GET Request : url=http://127.0.0.1:8000/ 
+ path_url=/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:50.900549" level="INFO">GET Response : url=http://127.0.0.1:8000/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:50 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Content-Length': '8194', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;BlockVote&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    &lt;style&gt;
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Cormorant Garamond',serif}
+        body{background:#e9eef5;color:#0f172a;overflow-x:hidden}
+        body.splash-lock{overflow:hidden}
+        .splash{
+            position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;
+            background:#fff;transition:opacity .22s ease, visibility .22s ease;
+        }
+        .splash.hide{opacity:0;visibility:hidden}
+        .splash-stack{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+        .splash-logo{
+            width:60px;height:60px;border-radius:12px;background:#0b5cad;color:#fff;
+            display:flex;align-items:center;justify-content:center;
+            font-size:36px;font-weight:700;line-height:1;
+            box-shadow:0 10px 24px rgba(11,92,173,.24);
+        }
+        .dot-loader{display:flex;align-items:center;gap:10px}
+        .dot{
+            width:12px;height:12px;border-radius:999px;background:#0b5cad;
+            animation:dotDance .7s ease-in-out infinite;
+        }
+        .dot:nth-child(2){animation-delay:.12s}
+        .dot:nth-child(3){animation-delay:.24s}
+        @keyframes dotDance{
+            0%,80%,100%{transform:translateY(0) scale(1);opacity:.75}
+            40%{transform:translateY(-10px) scale(1.08);opacity:1}
+        }
+        .site-content{
+            opacity:0;transform:none;
+            transition:opacity .28s ease;
+        }
+        .site-content.show{opacity:1}
+        .ambient{
+            position:fixed;inset:0;pointer-events:none;z-index:0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(11,92,173,.14), transparent 34%),
+                radial-gradient(circle at 85% 15%, rgba(25,118,210,.1), transparent 32%),
+                radial-gradient(circle at 70% 80%, rgba(99,102,241,.08), transparent 38%),
+                linear-gradient(180deg, #edf2f8 0%, #e7edf5 100%);
+        }
+        .navbar{
+            height:64px;display:flex;justify-content:space-between;align-items:center;
+            padding:0 44px;background:#fff;border-bottom:1px solid #dbe3ed;
+            position:relative;z-index:2;
+        }
+        .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:28px}
+        .brand-mark{
+            width:28px;height:28px;border-radius:7px;background:#0b5cad;color:#fff;
+            display:flex;align-items:center;justify-content:center;font-size:15px;
+        }
+        .nav-links{display:flex;gap:12px;align-items:center}
+        .nav-links a{
+            text-decoration:none;color:#0f172a;font-size:24px;font-weight:600;padding:4px 8px;border-radius:8px;
+        }
+        .nav-links a:hover{background:#e2e8f0}
+        .page{padding:28px 44px;position:relative;z-index:2}
+        .hero{
+            background:linear-gradient(135deg, rgba(255,255,255,.86), rgba(255,255,255,.72));
+            border:1px solid rgba(206,216,229,.9);border-radius:12px;box-shadow:0 20px 45px rgba(16,24,40,.12);
+            backdrop-filter:blur(10px);
+            padding:54px 28px;text-align:center;
+        }
+        .badge{
+            display:inline-block;background:#eef4fc;color:#0b5cad;border:1px solid #bcd2ee;border-radius:999px;
+            padding:6px 14px;font-size:18px;font-weight:600;margin-bottom:16px;
+        }
+        h1{font-size:56px;font-weight:700;line-height:1.08;margin-bottom:14px}
+        h1 span{color:#0b5cad}
+        p{max-width:780px;margin:0 auto;color:#334155;font-size:30px;line-height:1.4}
+        .buttons{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .btn{
+            display:inline-block;padding:12px 20px;border-radius:10px;text-decoration:none;
+            font-size:26px;font-weight:600;border:1px solid transparent;
+        }
+        .btn-primary{background:#0b5cad;color:#fff}
+        .btn-primary:hover{background:#0a4d92}
+        .btn-secondary{background:#fff;color:#0f172a;border-color:#c4cfdd}
+        .btn-secondary:hover{background:#f8fafc}
+        .benefits{
+            margin-top:16px;
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            gap:14px;
+        }
+        .benefit-card{
+            background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
+            border:1px solid rgba(206,216,229,.9);border-radius:12px;
+            box-shadow:0 10px 25px rgba(16,24,40,.10);padding:18px;
+            backdrop-filter:blur(8px);
+        }
+        .benefit-card h3{font-size:30px;margin-bottom:8px;color:#0b5cad}
+        .benefit-card p{
+            max-width:none;margin:0;color:#334155;font-size:22px;line-height:1.35;text-align:left;
+        }
+        @media(max-width:980px){
+            .navbar{padding:0 16px}
+            .page{padding:16px}
+            .brand{font-size:22px}
+            .nav-links a{font-size:19px}
+            h1{font-size:38px}
+            p{font-size:24px}
+            .btn{font-size:22px}
+            .benefits{grid-template-columns:1fr}
+            .benefit-card h3{font-size:28px}
+            .benefit-card p{font-size:21px}
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="splash-lock"&gt;
+&lt;div id="splash" class="splash"&gt;
+    &lt;div class="splash-stack" aria-label="Loading"&gt;
+        &lt;div class="splash-logo"&gt;&amp;#10003;&lt;/div&gt;
+        &lt;div class="dot-loader"&gt;
+            &lt;span class="dot"&gt;&lt;/span&gt;
+            &lt;span class="dot"&gt;&lt;/span&gt;
+            &lt;span class="dot"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="siteContent" class="site-content"&gt;
+&lt;div class="ambient"&gt;&lt;/div&gt;
+&lt;div class="navbar"&gt;
+    &lt;div class="brand"&gt;&lt;div class="brand-mark"&gt;&amp;#10003;&lt;/div&gt;&lt;div&gt;BlockVote&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="nav-links"&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+        &lt;a href="/results/"&gt;Results&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="page"&gt;
+    &lt;div class="hero"&gt;
+        &lt;div class="badge"&gt;Powered by Blockchain Technology&lt;/div&gt;
+        &lt;h1&gt;Online Voting System &lt;br&gt;&lt;span&gt;Using Blockchain&lt;/span&gt;&lt;/h1&gt;
+        &lt;p&gt;
+            A secure transparent and tamper-proof voting platform designed
+            for modern democratic processes
+        &lt;/p&gt;
+        &lt;div class="buttons"&gt;
+            &lt;a href="/voter-login/" class="btn btn-primary"&gt;Login&lt;/a&gt;
+            &lt;a href="/register/" class="btn btn-secondary"&gt;Register&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="benefits"&gt;
+        &lt;div class="benefit-card"&gt;
+            &lt;h3&gt;Secure Ballots&lt;/h3&gt;
+            &lt;p&gt;Blockchain-backed storage helps protect each vote from tampering and unauthorized edits.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="benefit-card"&gt;
+            &lt;h3&gt;Transparent Process&lt;/h3&gt;
+            &lt;p&gt;All vote transactions are auditable, improving clarity and confidence in election outcomes.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="benefit-card"&gt;
+            &lt;h3&gt;Faster Elections&lt;/h3&gt;
+            &lt;p&gt;Digital workflow reduces manual handling and speeds up registration, voting, and counting.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="benefit-card"&gt;
+            &lt;h3&gt;Trusted Results&lt;/h3&gt;
+            &lt;p&gt;Automated tallying with immutable records minimizes disputes and strengthens credibility.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    (function () {
+        const splash = document.getElementById("splash");
+        const siteContent = document.getElementById("siteContent");
+        let done = false;
+
+        function finishSplash() {
+            if (done) return;
+            done = true;
+            if (splash) splash.classList.add("hide");
+            if (siteContent) siteContent.classList.add("show");
+            document.body.classList.remove("splash-lock");
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", function () {
+                setTimeout(finishSplash, 1000);
+            }, { once: true });
+        } else {
+            setTimeout(finishSplash, 1000);
+        }
+    })();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:50.901168" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.894632" elapsed="0.006634"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:50.903435" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.901986" elapsed="0.001587"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:50.894131" elapsed="0.009939"/>
+</test>
+<test id="s1-t2" name="Test Register Page" line="12">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:50.917202" level="INFO">GET Request : url=http://127.0.0.1:8000/register/ 
+ path_url=/register/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:50.917618" level="INFO">GET Response : url=http://127.0.0.1:8000/register/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:50 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Vary': 'Cookie', 'Content-Length': '5842', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:50 GMT; Max-Age=31449600; Path=/; SameSite=Lax, sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg; expires=Tue, 07 Apr 2026 14:21:50 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Voter Registration - BlockVote&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cormorant Garamond', serif; }
+        body { background: #f5f7fa; }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { display: flex; align-items: center; font-weight: 700; font-size: 20px; }
+        .logo-box {
+            background: #2563eb;
+            color: white;
+            padding: 8px 10px;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        .nav-links a { text-decoration: none; color: #1e293b; margin-left: 25px; font-weight: 500; }
+        .hero {
+            margin: 60px;
+            background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+            padding: 80px 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            width: 440px;
+            margin: 30px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        h2 { margin-bottom: 15px; color: #0f172a; }
+        p { color: #475569; margin-bottom: 18px; }
+        .field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .stack-buttons { display: flex; flex-direction: column; gap: 12px; align-items: stretch; margin-top: 12px; }
+        .btn-primary { background: #2563eb; color: white; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-secondary {
+            background: #64748b;
+            color: white;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .btn-secondary:hover { background: #475569; }
+        .btn-dashboard {
+            background: #10b981;
+            color: white;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .btn-dashboard:hover { background: #059669; }
+        .no-decoration { text-decoration: none; display: block; }
+        .wallet-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .wallet-text {
+            color: #0f172a;
+            font-size: 14px;
+            word-break: break-all;
+            flex: 1;
+        }
+        .copy-btn {
+            border: none;
+            background: #e2e8f0;
+            border-radius: 6px;
+            padding: 8px 10px;
+            cursor: pointer;
+            width: auto;
+            color: #0f172a;
+            font-size: 13px;
+            line-height: 1;
+        }
+        .copy-btn:hover { background: #cbd5e1; }
+        .error { color: #dc2626; margin-bottom: 10px; }
+        @media(max-width: 768px){
+            .navbar { padding: 15px 20px; }
+            .hero { margin: 20px; padding: 60px 20px; }
+            .card { width: 95%; }
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;div class="navbar"&gt;
+    &lt;div class="logo"&gt;
+        &lt;div class="logo-box"&gt;&amp;#10003;&lt;/div&gt;
+        BlockVote
+    &lt;/div&gt;
+    &lt;div class="nav-links"&gt;
+        
+            &lt;a href="/"&gt;Home&lt;/a&gt;
+            &lt;a href="/register/"&gt;Voter&lt;/a&gt;
+            &lt;a href="/results/"&gt;Results&lt;/a&gt;
+        
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div class="hero"&gt;
+    &lt;div class="card"&gt;
+        &lt;h2&gt;Voter Registration&lt;/h2&gt;
+        &lt;p&gt;Register with email and password, then generate a wallet address.&lt;/p&gt;
+
+        &lt;form method="POST"&gt;
+            &lt;input type="hidden" name="csrfmiddlewaretoken" value="kkoIlY2u68D6gTn4FNdh86LgmYPOEOhwfuMESQEf6mkFj0g2h742SsUZUwjZP9cg"&gt;
+
+            
+
+            &lt;input class="field" type="email" name="email" placeholder="Enter Email" value="" required&gt;
+            &lt;input class="field" type="password" name="password" placeholder="Enter Password" required&gt;
+
+            
+
+            &lt;div class="stack-buttons"&gt;
+                &lt;button type="submit" class="btn-primary"&gt;Register and Generate Wallet Address&lt;/button&gt;
+                &lt;a href="/voter-login/" class="no-decoration btn-secondary"&gt;Already Registered? Login&lt;/a&gt;
+                
+                    &lt;a href="/voter-login/" class="no-decoration btn-dashboard"&gt;Go to Dashboard&lt;/a&gt;
+                
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    function copyWallet() {
+        const walletEl = document.getElementById('walletAddress');
+        const copyMessage = document.getElementById('copyMessage');
+        if (!walletEl) return;
+
+        const wallet = walletEl.textContent.trim();
+        navigator.clipboard.writeText(wallet).then(function () {
+            if (copyMessage) {
+                copyMessage.style.display = 'block';
+            }
+        });
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:50.919384" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/register/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.905518" elapsed="0.014034"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:50.922510" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.921175" elapsed="0.001474"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:50.905037" elapsed="0.018053"/>
+</test>
+<test id="s1-t3" name="Test Voter Login Page" line="16">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:50.948935" level="INFO">GET Request : url=http://127.0.0.1:8000/voter-login/ 
+ path_url=/voter-login/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:50.949087" level="INFO">GET Response : url=http://127.0.0.1:8000/voter-login/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:50 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Vary': 'Cookie', 'Content-Length': '4549', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:50 GMT; Max-Age=31449600; Path=/; SameSite=Lax, sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg; expires=Tue, 07 Apr 2026 14:21:50 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Login - BlockVote&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cormorant Garamond', serif; }
+        body { background: #f5f7fa; }
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 60px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-weight: 700; font-size: 20px; }
+        .nav-links a { text-decoration: none; color: #1e293b; margin-left: 25px; font-weight: 500; }
+        .container { margin: 80px; display: flex; justify-content: center; }
+        .card {
+            background: white; padding: 40px; border-radius: 12px;
+            width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        h2 { text-align: center; margin-bottom: 25px; }
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #cbd5e1; border-radius: 6px;
+        }
+        button {
+            width: 100%; padding: 12px; background: #2563eb;
+            color: white; border: none; border-radius: 8px;
+            font-weight: 600; cursor: pointer;
+        }
+        button:hover { background: #1e40af; }
+        .error { color: #dc2626; margin-bottom: 15px; text-align: center; }
+        
+        .user-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        .user-type-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .user-type-label input[type="radio"] {
+            width: auto;
+            margin: 0;
+            cursor: pointer;
+        }
+        .admin-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .admin-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .admin-link a:hover {
+            text-decoration: underline;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #475569;
+        }
+        .register-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;div class="navbar"&gt;
+    &lt;div class="logo"&gt;BlockVote&lt;/div&gt;
+    &lt;div class="nav-links"&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+        &lt;a href="/register/"&gt;Voter&lt;/a&gt;
+        &lt;a href="/results/"&gt;Results&lt;/a&gt;
+        
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div class="container"&gt;
+    &lt;div class="card"&gt;
+        &lt;h2&gt;Login&lt;/h2&gt;
+
+        
+
+        &lt;form method="POST" id="loginForm"&gt;
+            &lt;input type="hidden" name="csrfmiddlewaretoken" value="hgroOa1voxxra6f2ysKKwp66MlmNf6fKcqPkl2DgoLe0dd80aMBvgLfPkTQYqrau"&gt;
+            
+            &lt;div class="user-type-selector"&gt;
+                &lt;label class="user-type-label"&gt;
+                    &lt;input type="radio" name="user_type" value="voter" checked&gt;
+                    Voter
+                &lt;/label&gt;
+                &lt;label class="user-type-label"&gt;
+                    &lt;input type="radio" name="user_type" value="admin"&gt;
+                    Admin
+                &lt;/label&gt;
+            &lt;/div&gt;
+
+            &lt;input type="email" name="email" placeholder="Enter Email" required&gt;
+            &lt;input type="password" name="password" placeholder="Enter Password" required&gt;
+            &lt;input type="text" name="wallet" placeholder="Enter Wallet Address" required&gt;
+            &lt;button type="submit"&gt;Login&lt;/button&gt;
+            
+            &lt;div class="register-link"&gt;
+                Don't have an account? &lt;a href="/register/"&gt;Register here&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        const userType = document.querySelector('input[name="user_type"]:checked').value;
+        
+        if (userType === 'admin') {
+            e.preventDefault();
+            window.location.href = '/admin-login/';
+        }
+    });
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:50.949275" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/voter-login/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.924989" elapsed="0.024309"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:50.950299" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.949724" elapsed="0.000634"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:50.924201" elapsed="0.026349"/>
+</test>
+<test id="s1-t4" name="Test Admin Login Page" line="20">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:50.988193" level="INFO">GET Request : url=http://127.0.0.1:8000/admin-login/ 
+ path_url=/admin-login/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:50.988488" level="INFO">GET Response : url=http://127.0.0.1:8000/admin-login/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:50 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Vary': 'Cookie', 'Content-Length': '2754', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:50 GMT; Max-Age=31449600; Path=/; SameSite=Lax, sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg; expires=Tue, 07 Apr 2026 14:21:50 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Admin Login - BlockVote&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cormorant Garamond', serif; }
+        body { background: #f5f7fa; }
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 60px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-weight: 700; font-size: 20px; }
+        .nav-links a { text-decoration: none; color: #1e293b; margin-left: 25px; font-weight: 500; }
+        .container { margin: 80px; display: flex; justify-content: center; }
+        .card {
+            background: white; padding: 40px; border-radius: 12px;
+            width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        h2 { text-align: center; margin-bottom: 25px; }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #cbd5e1; border-radius: 6px;
+        }
+        button {
+            width: 100%; padding: 12px; background: #2563eb;
+            color: white; border: none; border-radius: 8px;
+            font-weight: 600; cursor: pointer;
+        }
+        button:hover { background: #1e40af; }
+        .error { color: #dc2626; margin-bottom: 15px; text-align: center; }
+        .voter-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #475569;
+        }
+        .voter-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .voter-link a:hover {
+            text-decoration: underline;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class="navbar"&gt;
+    &lt;div class="logo"&gt;BlockVote&lt;/div&gt;
+    &lt;div class="nav-links"&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+    &lt;div class="card"&gt;
+        &lt;h2&gt;Admin Login&lt;/h2&gt;
+
+        
+
+        &lt;form method="POST"&gt;
+            &lt;input type="hidden" name="csrfmiddlewaretoken" value="PRvNv2v97NoO4QrFxYSC97hfoG8DZcJbK1TJ2U7U715n7XkD9iJnTtqYWeCOaxEV"&gt;
+            &lt;input type="email" name="email" placeholder="Enter Admin Email" required&gt;
+            &lt;input type="password" name="password" placeholder="Enter Password" required&gt;
+            &lt;button type="submit"&gt;Login&lt;/button&gt;
+            
+            &lt;div class="voter-link"&gt;
+                Are you a voter? &lt;a href="/voter-login/"&gt;Login as Voter&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+ 
+ </msg>
+<msg time="2026-03-24T19:51:50.988979" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/admin-login/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.953632" elapsed="0.035408"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:50.990817" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.990068" elapsed="0.000827"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:50.951933" elapsed="0.039408"/>
+</test>
+<test id="s1-t5" name="Test Results Page" line="24">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.006554" level="INFO">GET Request : url=http://127.0.0.1:8000/results/ 
+ path_url=/results/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.006715" level="INFO">GET Response : url=http://127.0.0.1:8000/results/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Content-Length': '4914', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Results - BlockVote&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+
+    &lt;style&gt;
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Cormorant Garamond',serif}
+        body{background:#eef2f6;color:#0f172a}
+        .navbar{
+            height:64px;display:flex;justify-content:flex-end;align-items:center;
+            padding:0 44px;background:#fff;border-bottom:1px solid #dbe3ed
+        }
+        .navbar a{
+            text-decoration:none;color:#0f172a;font-size:20px;font-weight:600;padding:4px 10px;border-radius:8px
+        }
+        .navbar a:hover{background:#e2e8f0}
+        .page{padding:24px 44px}
+        .shell{
+            background:#e9eef5;border:1px solid #ced8e5;border-radius:12px;padding:22px;
+        }
+        .headline{text-align:center;padding:8px 0 22px}
+        .head-icon{
+            width:48px;height:48px;border-radius:999px;background:#0b5cad;color:#fff;
+            display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px
+        }
+        .headline h1{font-size:54px;font-weight:700;line-height:1.05}
+        .headline p{font-size:24px;color:#475569}
+        .card{
+            background:#fff;border:1px solid #ced8e5;border-radius:12px;
+            box-shadow:0 2px 7px rgba(16,24,40,.06);padding:16px
+        }
+        .filter-card{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px}
+        .field-label{font-size:18px;font-weight:700;margin-bottom:6px}
+        .filter-select{
+            width:300px;max-width:100%;height:40px;border:1px solid #c8d4e4;border-radius:8px;
+            padding:0 10px;background:#f8fafc;font-size:18px
+        }
+        .badge{
+            background:#0b5cad;color:#fff;border-radius:999px;padding:4px 10px;
+            font-size:14px;font-weight:600;text-transform:lowercase
+        }
+        .stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+        .stat-label{font-size:18px;font-weight:700;color:#334155}
+        .stat-value{font-size:40px;font-weight:700;margin-top:8px}
+        .split-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        .section-title{font-size:34px;font-weight:700;line-height:1.1}
+        .section-subtitle{font-size:20px;color:#64748b;margin-bottom:10px}
+        .candidate-row{margin-bottom:10px}
+        .candidate-top{
+            display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px
+        }
+        .candidate-name{font-size:30px;font-weight:700}
+        .candidate-meta{font-size:20px;color:#64748b}
+        .candidate-score{font-size:22px;font-weight:700}
+        .bar-track{height:8px;background:#d7e2f0;border-radius:999px;overflow:hidden}
+        .bar-fill{height:100%;background:#0b5cad}
+        .bar-fill.top{background:#059669}
+        table{width:100%;border-collapse:collapse}
+        th,td{padding:10px 8px;text-align:left;border-bottom:1px solid #e2e8f0}
+        th{font-size:16px;color:#475569;font-weight:700}
+        td{font-size:20px}
+        .table-rank{font-weight:700;color:#0b5cad}
+        .table-votes{font-weight:700}
+        .empty{font-size:24px;color:#64748b}
+        @media(max-width: 980px){
+            .navbar{padding:0 16px}
+            .page{padding:16px}
+            .headline h1{font-size:40px}
+            .headline p{font-size:20px}
+            .filter-card{flex-direction:column;align-items:flex-start}
+            .stat-grid{grid-template-columns:1fr}
+            .split-grid{grid-template-columns:1fr}
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="navbar"&gt;
+    &lt;a href="/"&gt;Home&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="page"&gt;
+    &lt;div class="shell"&gt;
+        &lt;div class="headline"&gt;
+            &lt;div class="head-icon"&gt;&amp;#9776;&lt;/div&gt;
+            &lt;h1&gt;Election Results&lt;/h1&gt;
+            &lt;p&gt;Results are visible only after admin publishes them&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card filter-card"&gt;
+            &lt;form method="get"&gt;
+                &lt;div class="field-label"&gt;Select Election&lt;/div&gt;
+                &lt;select name="election" class="filter-select" onchange="this.form.submit()"&gt;
+                    
+                        &lt;option value="1" selected&gt;
+                            Test Election
+                        &lt;/option&gt;
+                    
+                &lt;/select&gt;
+            &lt;/form&gt;
+            
+                &lt;span class="badge"&gt;inactive&lt;/span&gt;
+            
+        &lt;/div&gt;
+
+        
+            &lt;div class="card" style="margin-bottom:16px;"&gt;
+                &lt;p class="empty" style="font-size:22px;"&gt;Results are not published yet. Admin must mark the election as completed and then publish the results.&lt;/p&gt;
+            &lt;/div&gt;
+        
+
+        
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.006965" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/results/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:50.994291" elapsed="0.012704"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.008332" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.007603" elapsed="0.000808"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:50.992549" elapsed="0.016458"/>
+</test>
+<test id="s1-t6" name="Test Blockchain Page" line="28">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.036951" level="INFO">GET Request : url=http://127.0.0.1:8000/blockchain/ (redirected) 
+ path_url=/blockchain/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.037084" level="INFO">GET Response : url=http://127.0.0.1:8000/admin/login/?next=/blockchain/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'Expires': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store, must-revalidate, private', 'Vary': 'Cookie', 'X-Frame-Options': 'DENY', 'Content-Length': '4090', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:51 GMT; Max-Age=31449600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en-us" dir="ltr"&gt;
+&lt;head&gt;
+&lt;title&gt;Log in | Django site admin&lt;/title&gt;
+&lt;link rel="stylesheet" href="/static/admin/css/base.css"&gt;
+
+  &lt;link rel="stylesheet" href="/static/admin/css/dark_mode.css"&gt;
+  &lt;script src="/static/admin/js/theme.js"&gt;&lt;/script&gt;
+
+
+  &lt;link rel="stylesheet" href="/static/admin/css/nav_sidebar.css"&gt;
+  &lt;script src="/static/admin/js/nav_sidebar.js" defer&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="/static/admin/css/login.css"&gt;
+
+
+
+
+
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="stylesheet" href="/static/admin/css/responsive.css"&gt;
+    
+
+&lt;meta name="robots" content="NONE,NOARCHIVE"&gt;
+&lt;/head&gt;
+
+&lt;body class=" login"
+  data-admin-utc-offset="0"&gt;
+&lt;a href="#content-start" class="skip-to-content-link"&gt;Skip to main content&lt;/a&gt;
+&lt;!-- Container --&gt;
+&lt;div id="container"&gt;
+
+    
+    &lt;!-- Header --&gt;
+    
+      &lt;header id="header"&gt;
+        &lt;div id="branding"&gt;
+        
+&lt;div id="site-name"&gt;&lt;a href="/admin/"&gt;Django administration&lt;/a&gt;&lt;/div&gt;
+
+  
+&lt;button class="theme-toggle"&gt;
+  &lt;span class="visually-hidden theme-label-when-auto"&gt;Toggle theme (current theme: auto)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-light"&gt;Toggle theme (current theme: light)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-dark"&gt;Toggle theme (current theme: dark)&lt;/span&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-auto"&gt;
+    &lt;use xlink:href="#icon-auto" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-dark"&gt;
+    &lt;use xlink:href="#icon-moon" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-light"&gt;
+    &lt;use xlink:href="#icon-sun" /&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+
+
+        &lt;/div&gt;
+        
+        
+      &lt;/header&gt;
+    
+    &lt;!-- END Header --&gt;
+    
+    
+
+    &lt;div class="main" id="main"&gt;
+      
+        
+      
+      &lt;main id="content-start" class="content" tabindex="-1"&gt;
+        
+          
+        
+        &lt;!-- Content --&gt;
+        &lt;div id="content" class="colM"&gt;
+          
+          
+          
+          
+
+
+
+
+&lt;div id="content-main"&gt;
+
+
+
+&lt;form action="/admin/login/?next=/blockchain/" method="post" id="login-form"&gt;&lt;input type="hidden" name="csrfmiddlewaretoken" value="IYBcapwu4OyFgnJ8EkSeVwk1zkZVh4vsD8Z8Hh8f42fejuC6gEJZFStK7St6spqc"&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_username" class="required"&gt;Username:&lt;/label&gt; &lt;input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_password" class="required"&gt;Password:&lt;/label&gt; &lt;input type="password" name="password" autocomplete="current-password" required id="id_password"&gt;
+    &lt;input type="hidden" name="next" value="/blockchain/"&gt;
+  &lt;/div&gt;
+  
+  
+  &lt;div class="submit-row"&gt;
+    &lt;input type="submit" value="Log in"&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/div&gt;
+
+          
+          &lt;br class="clear"&gt;
+        &lt;/div&gt;
+        &lt;!-- END Content --&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;footer id="footer"&gt;&lt;/footer&gt;
+&lt;/div&gt;
+&lt;!-- END Container --&gt;
+
+&lt;!-- SVGs --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" class="base-svgs"&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-auto"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-moon"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-sun"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/&gt;&lt;/symbol&gt;
+&lt;/svg&gt;
+&lt;!-- END SVGs --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.037302" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/blockchain/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.011148" elapsed="0.026191"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.038913" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.037927" elapsed="0.001087"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.010360" elapsed="0.029117"/>
+</test>
+<test id="s1-t7" name="Test Voter Dashboard" line="32">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.079023" level="INFO">GET Request : url=http://127.0.0.1:8000/voter-dashboard/ (redirected) 
+ path_url=/voter-dashboard/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.079560" level="INFO">GET Response : url=http://127.0.0.1:8000/voter-login/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Vary': 'Cookie', 'Content-Length': '4549', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:51 GMT; Max-Age=31449600; Path=/; SameSite=Lax, sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg; expires=Tue, 07 Apr 2026 14:21:51 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Login - BlockVote&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cormorant Garamond', serif; }
+        body { background: #f5f7fa; }
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 60px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-weight: 700; font-size: 20px; }
+        .nav-links a { text-decoration: none; color: #1e293b; margin-left: 25px; font-weight: 500; }
+        .container { margin: 80px; display: flex; justify-content: center; }
+        .card {
+            background: white; padding: 40px; border-radius: 12px;
+            width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        h2 { text-align: center; margin-bottom: 25px; }
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #cbd5e1; border-radius: 6px;
+        }
+        button {
+            width: 100%; padding: 12px; background: #2563eb;
+            color: white; border: none; border-radius: 8px;
+            font-weight: 600; cursor: pointer;
+        }
+        button:hover { background: #1e40af; }
+        .error { color: #dc2626; margin-bottom: 15px; text-align: center; }
+        
+        .user-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        .user-type-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .user-type-label input[type="radio"] {
+            width: auto;
+            margin: 0;
+            cursor: pointer;
+        }
+        .admin-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .admin-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .admin-link a:hover {
+            text-decoration: underline;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #475569;
+        }
+        .register-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;div class="navbar"&gt;
+    &lt;div class="logo"&gt;BlockVote&lt;/div&gt;
+    &lt;div class="nav-links"&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+        &lt;a href="/register/"&gt;Voter&lt;/a&gt;
+        &lt;a href="/results/"&gt;Results&lt;/a&gt;
+        
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div class="container"&gt;
+    &lt;div class="card"&gt;
+        &lt;h2&gt;Login&lt;/h2&gt;
+
+        
+
+        &lt;form method="POST" id="loginForm"&gt;
+            &lt;input type="hidden" name="csrfmiddlewaretoken" value="cPV9faemNOQqUE7zhgdHHOp5iPiJFK8P7Zj5M2Q7N2xZXL0xTA4srayOQnMUQ53z"&gt;
+            
+            &lt;div class="user-type-selector"&gt;
+                &lt;label class="user-type-label"&gt;
+                    &lt;input type="radio" name="user_type" value="voter" checked&gt;
+                    Voter
+                &lt;/label&gt;
+                &lt;label class="user-type-label"&gt;
+                    &lt;input type="radio" name="user_type" value="admin"&gt;
+                    Admin
+                &lt;/label&gt;
+            &lt;/div&gt;
+
+            &lt;input type="email" name="email" placeholder="Enter Email" required&gt;
+            &lt;input type="password" name="password" placeholder="Enter Password" required&gt;
+            &lt;input type="text" name="wallet" placeholder="Enter Wallet Address" required&gt;
+            &lt;button type="submit"&gt;Login&lt;/button&gt;
+            
+            &lt;div class="register-link"&gt;
+                Don't have an account? &lt;a href="/register/"&gt;Register here&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        const userType = document.querySelector('input[name="user_type"]:checked').value;
+        
+        if (userType === 'admin') {
+            e.preventDefault();
+            window.location.href = '/admin-login/';
+        }
+    });
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.080460" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/voter-dashboard/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.041335" elapsed="0.039291"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.084256" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.082178" elapsed="0.002366"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.040454" elapsed="0.044933"/>
+</test>
+<test id="s1-t8" name="Test Admin Dashboard" line="36">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.114984" level="INFO">GET Request : url=http://127.0.0.1:8000/admin-dashboard/ (redirected) 
+ path_url=/admin-dashboard/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.115214" level="INFO">GET Response : url=http://127.0.0.1:8000/admin/login/?next=/admin-dashboard/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'Expires': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store, must-revalidate, private', 'Vary': 'Cookie', 'X-Frame-Options': 'DENY', 'Content-Length': '4100', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:51 GMT; Max-Age=31449600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en-us" dir="ltr"&gt;
+&lt;head&gt;
+&lt;title&gt;Log in | Django site admin&lt;/title&gt;
+&lt;link rel="stylesheet" href="/static/admin/css/base.css"&gt;
+
+  &lt;link rel="stylesheet" href="/static/admin/css/dark_mode.css"&gt;
+  &lt;script src="/static/admin/js/theme.js"&gt;&lt;/script&gt;
+
+
+  &lt;link rel="stylesheet" href="/static/admin/css/nav_sidebar.css"&gt;
+  &lt;script src="/static/admin/js/nav_sidebar.js" defer&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="/static/admin/css/login.css"&gt;
+
+
+
+
+
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="stylesheet" href="/static/admin/css/responsive.css"&gt;
+    
+
+&lt;meta name="robots" content="NONE,NOARCHIVE"&gt;
+&lt;/head&gt;
+
+&lt;body class=" login"
+  data-admin-utc-offset="0"&gt;
+&lt;a href="#content-start" class="skip-to-content-link"&gt;Skip to main content&lt;/a&gt;
+&lt;!-- Container --&gt;
+&lt;div id="container"&gt;
+
+    
+    &lt;!-- Header --&gt;
+    
+      &lt;header id="header"&gt;
+        &lt;div id="branding"&gt;
+        
+&lt;div id="site-name"&gt;&lt;a href="/admin/"&gt;Django administration&lt;/a&gt;&lt;/div&gt;
+
+  
+&lt;button class="theme-toggle"&gt;
+  &lt;span class="visually-hidden theme-label-when-auto"&gt;Toggle theme (current theme: auto)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-light"&gt;Toggle theme (current theme: light)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-dark"&gt;Toggle theme (current theme: dark)&lt;/span&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-auto"&gt;
+    &lt;use xlink:href="#icon-auto" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-dark"&gt;
+    &lt;use xlink:href="#icon-moon" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-light"&gt;
+    &lt;use xlink:href="#icon-sun" /&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+
+
+        &lt;/div&gt;
+        
+        
+      &lt;/header&gt;
+    
+    &lt;!-- END Header --&gt;
+    
+    
+
+    &lt;div class="main" id="main"&gt;
+      
+        
+      
+      &lt;main id="content-start" class="content" tabindex="-1"&gt;
+        
+          
+        
+        &lt;!-- Content --&gt;
+        &lt;div id="content" class="colM"&gt;
+          
+          
+          
+          
+
+
+
+
+&lt;div id="content-main"&gt;
+
+
+
+&lt;form action="/admin/login/?next=/admin-dashboard/" method="post" id="login-form"&gt;&lt;input type="hidden" name="csrfmiddlewaretoken" value="k274aGLM2qIpvpr5VZoixWqAiO1HzZiKfcv0Hynx2EpYywk3xjf3hizjQmvSKkdu"&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_username" class="required"&gt;Username:&lt;/label&gt; &lt;input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_password" class="required"&gt;Password:&lt;/label&gt; &lt;input type="password" name="password" autocomplete="current-password" required id="id_password"&gt;
+    &lt;input type="hidden" name="next" value="/admin-dashboard/"&gt;
+  &lt;/div&gt;
+  
+  
+  &lt;div class="submit-row"&gt;
+    &lt;input type="submit" value="Log in"&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/div&gt;
+
+          
+          &lt;br class="clear"&gt;
+        &lt;/div&gt;
+        &lt;!-- END Content --&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;footer id="footer"&gt;&lt;/footer&gt;
+&lt;/div&gt;
+&lt;!-- END Container --&gt;
+
+&lt;!-- SVGs --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" class="base-svgs"&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-auto"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-moon"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-sun"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/&gt;&lt;/symbol&gt;
+&lt;/svg&gt;
+&lt;!-- END SVGs --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.115764" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/admin-dashboard/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.088515" elapsed="0.027316"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.118413" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.116421" elapsed="0.002231"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.087439" elapsed="0.032092"/>
+</test>
+<test id="s1-t9" name="Test Create Election" line="40">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.148370" level="INFO">GET Request : url=http://127.0.0.1:8000/create-election/ (redirected) 
+ path_url=/create-election/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.148602" level="INFO">GET Response : url=http://127.0.0.1:8000/admin/login/?next=/create-election/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'Expires': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store, must-revalidate, private', 'Vary': 'Cookie', 'X-Frame-Options': 'DENY', 'Content-Length': '4100', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:51 GMT; Max-Age=31449600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en-us" dir="ltr"&gt;
+&lt;head&gt;
+&lt;title&gt;Log in | Django site admin&lt;/title&gt;
+&lt;link rel="stylesheet" href="/static/admin/css/base.css"&gt;
+
+  &lt;link rel="stylesheet" href="/static/admin/css/dark_mode.css"&gt;
+  &lt;script src="/static/admin/js/theme.js"&gt;&lt;/script&gt;
+
+
+  &lt;link rel="stylesheet" href="/static/admin/css/nav_sidebar.css"&gt;
+  &lt;script src="/static/admin/js/nav_sidebar.js" defer&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="/static/admin/css/login.css"&gt;
+
+
+
+
+
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="stylesheet" href="/static/admin/css/responsive.css"&gt;
+    
+
+&lt;meta name="robots" content="NONE,NOARCHIVE"&gt;
+&lt;/head&gt;
+
+&lt;body class=" login"
+  data-admin-utc-offset="0"&gt;
+&lt;a href="#content-start" class="skip-to-content-link"&gt;Skip to main content&lt;/a&gt;
+&lt;!-- Container --&gt;
+&lt;div id="container"&gt;
+
+    
+    &lt;!-- Header --&gt;
+    
+      &lt;header id="header"&gt;
+        &lt;div id="branding"&gt;
+        
+&lt;div id="site-name"&gt;&lt;a href="/admin/"&gt;Django administration&lt;/a&gt;&lt;/div&gt;
+
+  
+&lt;button class="theme-toggle"&gt;
+  &lt;span class="visually-hidden theme-label-when-auto"&gt;Toggle theme (current theme: auto)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-light"&gt;Toggle theme (current theme: light)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-dark"&gt;Toggle theme (current theme: dark)&lt;/span&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-auto"&gt;
+    &lt;use xlink:href="#icon-auto" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-dark"&gt;
+    &lt;use xlink:href="#icon-moon" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-light"&gt;
+    &lt;use xlink:href="#icon-sun" /&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+
+
+        &lt;/div&gt;
+        
+        
+      &lt;/header&gt;
+    
+    &lt;!-- END Header --&gt;
+    
+    
+
+    &lt;div class="main" id="main"&gt;
+      
+        
+      
+      &lt;main id="content-start" class="content" tabindex="-1"&gt;
+        
+          
+        
+        &lt;!-- Content --&gt;
+        &lt;div id="content" class="colM"&gt;
+          
+          
+          
+          
+
+
+
+
+&lt;div id="content-main"&gt;
+
+
+
+&lt;form action="/admin/login/?next=/create-election/" method="post" id="login-form"&gt;&lt;input type="hidden" name="csrfmiddlewaretoken" value="PxWC0tcA0PYQECL7YEju1ZIz4n6WR60sKHkyxlOl03FpHJE5AYafLlRiCVA72rVc"&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_username" class="required"&gt;Username:&lt;/label&gt; &lt;input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_password" class="required"&gt;Password:&lt;/label&gt; &lt;input type="password" name="password" autocomplete="current-password" required id="id_password"&gt;
+    &lt;input type="hidden" name="next" value="/create-election/"&gt;
+  &lt;/div&gt;
+  
+  
+  &lt;div class="submit-row"&gt;
+    &lt;input type="submit" value="Log in"&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/div&gt;
+
+          
+          &lt;br class="clear"&gt;
+        &lt;/div&gt;
+        &lt;!-- END Content --&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;footer id="footer"&gt;&lt;/footer&gt;
+&lt;/div&gt;
+&lt;!-- END Container --&gt;
+
+&lt;!-- SVGs --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" class="base-svgs"&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-auto"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-moon"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-sun"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/&gt;&lt;/symbol&gt;
+&lt;/svg&gt;
+&lt;!-- END SVGs --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.149007" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/create-election/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.121833" elapsed="0.027242"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.152328" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.150059" elapsed="0.002800"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.120853" elapsed="0.032512"/>
+</test>
+<test id="s1-t10" name="Test Create Post" line="44">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.180262" level="INFO">GET Request : url=http://127.0.0.1:8000/create-post/ (redirected) 
+ path_url=/create-post/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.181275" level="INFO">GET Response : url=http://127.0.0.1:8000/admin/login/?next=/create-post/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'Expires': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store, must-revalidate, private', 'Vary': 'Cookie', 'X-Frame-Options': 'DENY', 'Content-Length': '4092', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:51 GMT; Max-Age=31449600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en-us" dir="ltr"&gt;
+&lt;head&gt;
+&lt;title&gt;Log in | Django site admin&lt;/title&gt;
+&lt;link rel="stylesheet" href="/static/admin/css/base.css"&gt;
+
+  &lt;link rel="stylesheet" href="/static/admin/css/dark_mode.css"&gt;
+  &lt;script src="/static/admin/js/theme.js"&gt;&lt;/script&gt;
+
+
+  &lt;link rel="stylesheet" href="/static/admin/css/nav_sidebar.css"&gt;
+  &lt;script src="/static/admin/js/nav_sidebar.js" defer&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="/static/admin/css/login.css"&gt;
+
+
+
+
+
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="stylesheet" href="/static/admin/css/responsive.css"&gt;
+    
+
+&lt;meta name="robots" content="NONE,NOARCHIVE"&gt;
+&lt;/head&gt;
+
+&lt;body class=" login"
+  data-admin-utc-offset="0"&gt;
+&lt;a href="#content-start" class="skip-to-content-link"&gt;Skip to main content&lt;/a&gt;
+&lt;!-- Container --&gt;
+&lt;div id="container"&gt;
+
+    
+    &lt;!-- Header --&gt;
+    
+      &lt;header id="header"&gt;
+        &lt;div id="branding"&gt;
+        
+&lt;div id="site-name"&gt;&lt;a href="/admin/"&gt;Django administration&lt;/a&gt;&lt;/div&gt;
+
+  
+&lt;button class="theme-toggle"&gt;
+  &lt;span class="visually-hidden theme-label-when-auto"&gt;Toggle theme (current theme: auto)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-light"&gt;Toggle theme (current theme: light)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-dark"&gt;Toggle theme (current theme: dark)&lt;/span&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-auto"&gt;
+    &lt;use xlink:href="#icon-auto" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-dark"&gt;
+    &lt;use xlink:href="#icon-moon" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-light"&gt;
+    &lt;use xlink:href="#icon-sun" /&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+
+
+        &lt;/div&gt;
+        
+        
+      &lt;/header&gt;
+    
+    &lt;!-- END Header --&gt;
+    
+    
+
+    &lt;div class="main" id="main"&gt;
+      
+        
+      
+      &lt;main id="content-start" class="content" tabindex="-1"&gt;
+        
+          
+        
+        &lt;!-- Content --&gt;
+        &lt;div id="content" class="colM"&gt;
+          
+          
+          
+          
+
+
+
+
+&lt;div id="content-main"&gt;
+
+
+
+&lt;form action="/admin/login/?next=/create-post/" method="post" id="login-form"&gt;&lt;input type="hidden" name="csrfmiddlewaretoken" value="LqzNPNyH7TNhvqIUBjqGtGVhm1mBpCXtGAXJmFas77uQyxBSdDhrd240UzQMAXSd"&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_username" class="required"&gt;Username:&lt;/label&gt; &lt;input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_password" class="required"&gt;Password:&lt;/label&gt; &lt;input type="password" name="password" autocomplete="current-password" required id="id_password"&gt;
+    &lt;input type="hidden" name="next" value="/create-post/"&gt;
+  &lt;/div&gt;
+  
+  
+  &lt;div class="submit-row"&gt;
+    &lt;input type="submit" value="Log in"&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/div&gt;
+
+          
+          &lt;br class="clear"&gt;
+        &lt;/div&gt;
+        &lt;!-- END Content --&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;footer id="footer"&gt;&lt;/footer&gt;
+&lt;/div&gt;
+&lt;!-- END Container --&gt;
+
+&lt;!-- SVGs --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" class="base-svgs"&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-auto"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-moon"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-sun"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/&gt;&lt;/symbol&gt;
+&lt;/svg&gt;
+&lt;!-- END SVGs --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.182176" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/create-post/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.155043" elapsed="0.027228"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.185977" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.184232" elapsed="0.001920"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.154267" elapsed="0.032656"/>
+</test>
+<test id="s1-t11" name="Test Create Candidate" line="48">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.210000" level="INFO">GET Request : url=http://127.0.0.1:8000/create-candidate/ (redirected) 
+ path_url=/create-candidate/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.210208" level="INFO">GET Response : url=http://127.0.0.1:8000/admin/login/?next=/create-candidate/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'Expires': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store, must-revalidate, private', 'Vary': 'Cookie', 'X-Frame-Options': 'DENY', 'Content-Length': '4102', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:51 GMT; Max-Age=31449600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en-us" dir="ltr"&gt;
+&lt;head&gt;
+&lt;title&gt;Log in | Django site admin&lt;/title&gt;
+&lt;link rel="stylesheet" href="/static/admin/css/base.css"&gt;
+
+  &lt;link rel="stylesheet" href="/static/admin/css/dark_mode.css"&gt;
+  &lt;script src="/static/admin/js/theme.js"&gt;&lt;/script&gt;
+
+
+  &lt;link rel="stylesheet" href="/static/admin/css/nav_sidebar.css"&gt;
+  &lt;script src="/static/admin/js/nav_sidebar.js" defer&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="/static/admin/css/login.css"&gt;
+
+
+
+
+
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="stylesheet" href="/static/admin/css/responsive.css"&gt;
+    
+
+&lt;meta name="robots" content="NONE,NOARCHIVE"&gt;
+&lt;/head&gt;
+
+&lt;body class=" login"
+  data-admin-utc-offset="0"&gt;
+&lt;a href="#content-start" class="skip-to-content-link"&gt;Skip to main content&lt;/a&gt;
+&lt;!-- Container --&gt;
+&lt;div id="container"&gt;
+
+    
+    &lt;!-- Header --&gt;
+    
+      &lt;header id="header"&gt;
+        &lt;div id="branding"&gt;
+        
+&lt;div id="site-name"&gt;&lt;a href="/admin/"&gt;Django administration&lt;/a&gt;&lt;/div&gt;
+
+  
+&lt;button class="theme-toggle"&gt;
+  &lt;span class="visually-hidden theme-label-when-auto"&gt;Toggle theme (current theme: auto)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-light"&gt;Toggle theme (current theme: light)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-dark"&gt;Toggle theme (current theme: dark)&lt;/span&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-auto"&gt;
+    &lt;use xlink:href="#icon-auto" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-dark"&gt;
+    &lt;use xlink:href="#icon-moon" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-light"&gt;
+    &lt;use xlink:href="#icon-sun" /&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+
+
+        &lt;/div&gt;
+        
+        
+      &lt;/header&gt;
+    
+    &lt;!-- END Header --&gt;
+    
+    
+
+    &lt;div class="main" id="main"&gt;
+      
+        
+      
+      &lt;main id="content-start" class="content" tabindex="-1"&gt;
+        
+          
+        
+        &lt;!-- Content --&gt;
+        &lt;div id="content" class="colM"&gt;
+          
+          
+          
+          
+
+
+
+
+&lt;div id="content-main"&gt;
+
+
+
+&lt;form action="/admin/login/?next=/create-candidate/" method="post" id="login-form"&gt;&lt;input type="hidden" name="csrfmiddlewaretoken" value="ihGSZJhUKqbTSBnD3vHC1jwA2Gzc4aKzdr4OwBTFKESsVIgBFPynLFFjAe3nfvFj"&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_username" class="required"&gt;Username:&lt;/label&gt; &lt;input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_password" class="required"&gt;Password:&lt;/label&gt; &lt;input type="password" name="password" autocomplete="current-password" required id="id_password"&gt;
+    &lt;input type="hidden" name="next" value="/create-candidate/"&gt;
+  &lt;/div&gt;
+  
+  
+  &lt;div class="submit-row"&gt;
+    &lt;input type="submit" value="Log in"&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/div&gt;
+
+          
+          &lt;br class="clear"&gt;
+        &lt;/div&gt;
+        &lt;!-- END Content --&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;footer id="footer"&gt;&lt;/footer&gt;
+&lt;/div&gt;
+&lt;!-- END Container --&gt;
+
+&lt;!-- SVGs --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" class="base-svgs"&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-auto"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-moon"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-sun"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/&gt;&lt;/symbol&gt;
+&lt;/svg&gt;
+&lt;!-- END SVGs --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.210633" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/create-candidate/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.188550" elapsed="0.022142"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.212425" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.211398" elapsed="0.001120"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.187891" elapsed="0.025086"/>
+</test>
+<test id="s1-t12" name="Test View Election ID 1" line="52">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.229336" level="INFO">GET Request : url=http://127.0.0.1:8000/view-election/1/ 
+ path_url=/view-election/1/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.229513" level="INFO">GET Response : url=http://127.0.0.1:8000/view-election/1/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'X-Frame-Options': 'DENY', 'Content-Length': '9281', 'Vary': 'Cookie', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;View Election - BlockVote&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    &lt;style&gt;
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Cormorant Garamond',serif}
+        body{background:#eef2f6;color:#0f172a}
+
+        .navbar{
+            height:64px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:0 44px;
+            background:#ffffff;
+            border-bottom:1px solid #dbe3ed;
+        }
+        .brand{display:flex;align-items:center;gap:10px;font-size:28px;font-weight:800}
+        .brand-mark{
+            width:28px;height:28px;border-radius:7px;background:#0b5cad;color:#fff;
+            display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;
+        }
+        .brand-text{font-size:29px;line-height:1}
+
+        .nav-links{display:flex;gap:18px;align-items:center}
+        .nav-links a{
+            text-decoration:none;color:#0f172a;font-size:14px;font-weight:500;padding:6px 10px;border-radius:8px;
+        }
+        .nav-links a:hover{background:#e2e8f0}
+
+        .page{padding:28px 44px 52px}
+
+        .hero{
+            display:flex;justify-content:space-between;align-items:center;gap:16px;
+            background:#e1e7ef;border:1px solid #d1dae6;border-radius:12px;padding:22px 22px;
+        }
+        .profile{display:flex;align-items:center;gap:16px}
+        .avatar{
+            width:52px;height:52px;border-radius:999px;background:#0b5cad;color:#fff;
+            display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;
+        }
+        .profile-name{font-size:34px;font-weight:800;line-height:1.05;margin-bottom:3px}
+        .profile-meta{font-size:13px;color:#334155}
+        .tag{
+            display:inline-block;background:#059669;color:#fff;border-radius:6px;
+            padding:2px 8px;font-size:12px;font-weight:700;margin-left:8px;
+        }
+        .logout-btn{
+            text-decoration:none;border:1px solid #c4cfdd;color:#0f172a;background:#f8fafc;
+            padding:10px 14px;border-radius:8px;font-size:14px;font-weight:600;
+        }
+
+        .grid{
+            margin-top:16px;
+            display:grid;
+            grid-template-columns:2fr 1fr;
+            gap:18px;
+            align-items:start;
+        }
+        .card{
+            background:#ffffff;border:1px solid #ced8e5;border-radius:12px;
+            box-shadow:0 2px 7px rgba(16,24,40,.06);padding:20px;
+        }
+        .card h3{font-size:28px;font-weight:800;margin-bottom:8px}
+        .muted{color:#475569;font-size:14px}
+        .subtle{color:#64748b;font-size:13px}
+
+        .section-title{font-size:18px;font-weight:700;margin-bottom:4px}
+        .section-sub{font-size:14px;color:#475569;margin-bottom:14px}
+
+        .election-chip{
+            display:flex;justify-content:space-between;gap:8px;align-items:center;
+            border:1px solid #0b5cad;border-radius:8px;background:#eef4fc;padding:14px 14px;
+        }
+        .chip-name{font-size:22px;font-weight:700;margin-bottom:4px}
+        .chip-meta{font-size:13px;color:#475569}
+        .status-badge{
+            font-size:12px;font-weight:700;padding:3px 10px;border-radius:7px;color:#fff;background:#059669;
+        }
+        .status-badge.inactive{background:#ef4444}
+
+        .post-block{margin-top:16px}
+        .post-title{font-size:20px;font-weight:700;margin:0 0 10px}
+        .candidate{
+            border:1px solid #d2dbe8;border-radius:9px;background:#f8fafc;
+            padding:14px 14px;margin-bottom:10px;display:flex;justify-content:space-between;gap:12px;align-items:center;
+        }
+        .candidate.active{border-color:#0b5cad;background:#eef4fc}
+        .cand-name{font-size:22px;font-weight:700;margin-bottom:2px}
+        .cand-meta{font-size:13px;color:#475569}
+
+        .action a,.action button{
+            border:none;border-radius:8px;padding:10px 14px;font-weight:600;font-size:14px;cursor:pointer;
+        }
+        .vote-btn{background:#0b5cad;color:#fff;text-decoration:none;display:inline-block}
+        .disabled{background:#94a3b8;color:#fff}
+        .ok{color:#059669;font-weight:700;font-size:13px}
+        .note{color:#64748b;font-size:13px}
+
+        .info-list{display:grid;grid-template-columns:1fr auto;gap:12px 10px;font-size:14px}
+        .history-item{
+            border:1px solid #d2dbe8;border-radius:8px;padding:12px;background:#f8fafc;margin-top:10px;
+        }
+        .history-title{font-size:15px;font-weight:700}
+
+        @media(max-width: 980px){
+            .navbar{padding:0 16px}
+            .page{padding:16px}
+            .brand{font-size:22px}
+            .brand-text{font-size:23px}
+            .profile-name{font-size:24px}
+            .grid{grid-template-columns:1fr}
+            .nav-links{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+            .nav-links a{padding:4px 8px;font-size:13px}
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;div class="navbar"&gt;
+    &lt;div class="brand"&gt;
+        &lt;div class="brand-mark"&gt;&amp;#10003;&lt;/div&gt;
+        &lt;div class="brand-text"&gt;BlockVote&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nav-links"&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+        &lt;a href="/register/"&gt;Voter&lt;/a&gt;
+        &lt;a href="/results/"&gt;Results&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div class="page"&gt;
+    &lt;div class="hero"&gt;
+        &lt;div class="profile"&gt;
+            &lt;div class="avatar"&gt;NA&lt;/div&gt;
+            &lt;div&gt;
+                &lt;div class="profile-name"&gt;Voter Panel&lt;/div&gt;
+                &lt;div class="profile-meta"&gt;
+                    Wallet: Not logged...
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+    &lt;/div&gt;
+
+    &lt;div class="grid"&gt;
+        &lt;div&gt;
+            &lt;div class="card"&gt;
+                &lt;div class="section-title"&gt;Active Election&lt;/div&gt;
+                &lt;div class="section-sub"&gt;Select your preferred candidate for each post.&lt;/div&gt;
+
+                &lt;div class="election-chip"&gt;
+                    &lt;div&gt;
+                        &lt;div class="chip-name"&gt;Test Election&lt;/div&gt;
+                        &lt;div class="chip-meta"&gt;2 posts available&lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                        &lt;span class="status-badge inactive"&gt;inactive&lt;/span&gt;
+                    
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class="card" style="margin-top:14px;"&gt;
+                &lt;div class="section-title"&gt;Select Candidate&lt;/div&gt;
+                &lt;div class="section-sub"&gt;Choose your preferred candidate.&lt;/div&gt;
+
+                
+                    &lt;div class="post-block"&gt;
+                        &lt;h3 class="post-title"&gt;President&lt;/h3&gt;
+
+                        
+                            &lt;div class="candidate "&gt;
+                                &lt;div&gt;
+                                    &lt;div class="cand-name"&gt;Cand1&lt;/div&gt;
+                                    &lt;div class="cand-meta"&gt;
+                                        N/A | Sem N/A
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+
+                                &lt;div class="action"&gt;
+                                    
+                                        &lt;a class="vote-btn" href="/voter-login/"&gt;Login to Vote&lt;/a&gt;
+                                    
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        
+                    &lt;/div&gt;
+                
+                    &lt;div class="post-block"&gt;
+                        &lt;h3 class="post-title"&gt;VP&lt;/h3&gt;
+
+                        
+                            &lt;div class="candidate "&gt;
+                                &lt;div&gt;
+                                    &lt;div class="cand-name"&gt;Cand2&lt;/div&gt;
+                                    &lt;div class="cand-meta"&gt;
+                                        N/A | Sem N/A
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+
+                                &lt;div class="action"&gt;
+                                    
+                                        &lt;a class="vote-btn" href="/voter-login/"&gt;Login to Vote&lt;/a&gt;
+                                    
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        
+                    &lt;/div&gt;
+                
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+            &lt;div class="card"&gt;
+                &lt;h3 style="font-size:18px;margin-bottom:12px;"&gt;Voter Information&lt;/h3&gt;
+                &lt;div class="info-list"&gt;
+                    &lt;div class="subtle"&gt;election&lt;/div&gt;
+                    &lt;div&gt;Test Election&lt;/div&gt;
+                    &lt;div class="subtle"&gt;wallet&lt;/div&gt;
+                    &lt;div&gt;N/A...&lt;/div&gt;
+                    &lt;div class="subtle"&gt;posts&lt;/div&gt;
+                    &lt;div&gt;2&lt;/div&gt;
+                    &lt;div class="subtle"&gt;verified&lt;/div&gt;
+                    &lt;div&gt;false&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class="card" style="margin-top:14px;"&gt;
+                &lt;h3 style="font-size:18px;margin-bottom:12px;"&gt;Your Vote History&lt;/h3&gt;
+                
+                    &lt;p class="muted"&gt;No votes recorded yet.&lt;/p&gt;
+                
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.229869" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/view-election/1/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.214475" elapsed="0.015421"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.230933" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.230287" elapsed="0.000716"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.213823" elapsed="0.017524"/>
+</test>
+<test id="s1-t13" name="Test Django Admin" line="56">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-24T19:51:51.260608" level="INFO">GET Request : url=http://127.0.0.1:8000/admin/ (redirected) 
+ path_url=/admin/ 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; sessionid=qtlhp4gsqh1p9znf1vlf2gkpz6a66jmg'} 
+ body=None 
+ </msg>
+<msg time="2026-03-24T19:51:51.261069" level="INFO">GET Response : url=http://127.0.0.1:8000/admin/login/?next=/admin/ 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.14.2', 'Content-Type': 'text/html; charset=utf-8', 'Expires': 'Tue, 24 Mar 2026 14:21:51 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store, must-revalidate, private', 'Vary': 'Cookie', 'X-Frame-Options': 'DENY', 'Content-Length': '4080', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin', 'Set-Cookie': 'csrftoken=5ky6H2MVaoRJdh38Mu1VUwjTIIEllv5U; expires=Tue, 23 Mar 2027 14:21:51 GMT; Max-Age=31449600; Path=/; SameSite=Lax'} 
+ body=&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en-us" dir="ltr"&gt;
+&lt;head&gt;
+&lt;title&gt;Log in | Django site admin&lt;/title&gt;
+&lt;link rel="stylesheet" href="/static/admin/css/base.css"&gt;
+
+  &lt;link rel="stylesheet" href="/static/admin/css/dark_mode.css"&gt;
+  &lt;script src="/static/admin/js/theme.js"&gt;&lt;/script&gt;
+
+
+  &lt;link rel="stylesheet" href="/static/admin/css/nav_sidebar.css"&gt;
+  &lt;script src="/static/admin/js/nav_sidebar.js" defer&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="/static/admin/css/login.css"&gt;
+
+
+
+
+
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="stylesheet" href="/static/admin/css/responsive.css"&gt;
+    
+
+&lt;meta name="robots" content="NONE,NOARCHIVE"&gt;
+&lt;/head&gt;
+
+&lt;body class=" login"
+  data-admin-utc-offset="0"&gt;
+&lt;a href="#content-start" class="skip-to-content-link"&gt;Skip to main content&lt;/a&gt;
+&lt;!-- Container --&gt;
+&lt;div id="container"&gt;
+
+    
+    &lt;!-- Header --&gt;
+    
+      &lt;header id="header"&gt;
+        &lt;div id="branding"&gt;
+        
+&lt;div id="site-name"&gt;&lt;a href="/admin/"&gt;Django administration&lt;/a&gt;&lt;/div&gt;
+
+  
+&lt;button class="theme-toggle"&gt;
+  &lt;span class="visually-hidden theme-label-when-auto"&gt;Toggle theme (current theme: auto)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-light"&gt;Toggle theme (current theme: light)&lt;/span&gt;
+  &lt;span class="visually-hidden theme-label-when-dark"&gt;Toggle theme (current theme: dark)&lt;/span&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-auto"&gt;
+    &lt;use xlink:href="#icon-auto" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-dark"&gt;
+    &lt;use xlink:href="#icon-moon" /&gt;
+  &lt;/svg&gt;
+  &lt;svg aria-hidden="true" class="theme-icon-when-light"&gt;
+    &lt;use xlink:href="#icon-sun" /&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+
+
+        &lt;/div&gt;
+        
+        
+      &lt;/header&gt;
+    
+    &lt;!-- END Header --&gt;
+    
+    
+
+    &lt;div class="main" id="main"&gt;
+      
+        
+      
+      &lt;main id="content-start" class="content" tabindex="-1"&gt;
+        
+          
+        
+        &lt;!-- Content --&gt;
+        &lt;div id="content" class="colM"&gt;
+          
+          
+          
+          
+
+
+
+
+&lt;div id="content-main"&gt;
+
+
+
+&lt;form action="/admin/login/?next=/admin/" method="post" id="login-form"&gt;&lt;input type="hidden" name="csrfmiddlewaretoken" value="jfVfo03RFWa7YbwSon93eq7AzFCTiMKNepjbVSFCFaRG1ipQ0H0OYMgj7d64t7Fx"&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_username" class="required"&gt;Username:&lt;/label&gt; &lt;input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-row"&gt;
+    
+    &lt;label for="id_password" class="required"&gt;Password:&lt;/label&gt; &lt;input type="password" name="password" autocomplete="current-password" required id="id_password"&gt;
+    &lt;input type="hidden" name="next" value="/admin/"&gt;
+  &lt;/div&gt;
+  
+  
+  &lt;div class="submit-row"&gt;
+    &lt;input type="submit" value="Log in"&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/div&gt;
+
+          
+          &lt;br class="clear"&gt;
+        &lt;/div&gt;
+        &lt;!-- END Content --&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;footer id="footer"&gt;&lt;/footer&gt;
+&lt;/div&gt;
+&lt;!-- END Container --&gt;
+
+&lt;!-- SVGs --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" class="base-svgs"&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-auto"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-moon"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/&gt;&lt;/symbol&gt;
+  &lt;symbol viewBox="0 0 24 24" id="icon-sun"&gt;&lt;path d="M0 0h24v24H0z" fill="currentColor"/&gt;&lt;path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/&gt;&lt;/symbol&gt;
+&lt;/svg&gt;
+&lt;!-- END SVGs --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2026-03-24T19:51:51.261442" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>voting</arg>
+<arg>/admin/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.232936" elapsed="0.028554"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-03-24T19:51:51.263128" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-03-24T19:51:51.262242" elapsed="0.000972"/>
+</kw>
+<status status="PASS" start="2026-03-24T19:51:51.232294" elapsed="0.031421"/>
+</test>
+<doc>13/13 PASS - ALL voting app pages/endpoints validated</doc>
+<status status="PASS" start="2026-03-24T19:51:50.677370" elapsed="0.587645"/>
+</suite>
+<statistics>
+<total>
+<stat pass="13" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Perfect 13 Pass" id="s1" pass="13" fail="0" skip="0">Perfect 13 Pass</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

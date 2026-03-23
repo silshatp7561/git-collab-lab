@@ -41,9 +41,6 @@
             background:#0b5cad;color:#fff;border-radius:999px;padding:4px 10px;
             font-size:14px;font-weight:600;text-transform:lowercase
         }
-        .badge.active{background:#059669}
-        .badge.inactive{background:#64748b}
-        .badge.completed{background:#2563eb}
         .stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
         .stat-label{font-size:18px;font-weight:700;color:#334155}
         .stat-value{font-size:40px;font-weight:700;margin-top:8px}
@@ -87,7 +84,7 @@
         <div class="headline">
             <div class="head-icon">&#9776;</div>
             <h1>Election Results</h1>
-            <p>Results are visible only after the election is completed by admin</p>
+            <p>Results are visible only after admin publishes them</p>
         </div>
 
         <div class="card filter-card">
@@ -104,13 +101,7 @@
                 </select>
             </form>
             {% if selected_election %}
-                {% if selected_election.is_completed %}
-                    <span class="badge completed">completed</span>
-                {% elif selected_election.is_active %}
-                    <span class="badge active">active</span>
-                {% else %}
-                    <span class="badge inactive">inactive</span>
-                {% endif %}
+                <span class="badge">{% if selected_election.is_active %}active{% else %}inactive{% endif %}</span>
             {% endif %}
         </div>
 

@@ -80,7 +80,6 @@
             font-size:12px;font-weight:700;padding:3px 10px;border-radius:7px;color:#fff;background:#059669;
         }
         .status-badge.inactive{background:#ef4444}
-        .status-badge.completed{background:#2563eb}
 
         .post-block{margin-top:16px}
         .post-title{font-size:20px;font-weight:700;margin:0 0 10px}
@@ -161,9 +160,7 @@
                         <div class="chip-name">{{ election.name }}</div>
                         <div class="chip-meta">{{ posts|length }} post{{ posts|length|pluralize }} available</div>
                     </div>
-                    {% if election.is_completed %}
-                        <span class="status-badge completed">completed</span>
-                    {% elif election.is_active %}
+                    {% if election.is_active %}
                         <span class="status-badge">active</span>
                     {% else %}
                         <span class="status-badge inactive">inactive</span>
@@ -192,9 +189,7 @@
                                     {% if not wallet %}
                                         <a class="vote-btn" href="{% url 'voter_login' %}">Login to Vote</a>
                                     {% else %}
-                                        {% if election.is_completed %}
-                                            <button class="disabled" disabled>Election Completed</button>
-                                        {% elif not election.is_active %}
+                                        {% if not election.is_active %}
                                             <button class="disabled" disabled>Election Inactive</button>
                                         {% elif candidate.id in voted_candidate_ids %}
                                             <div class="ok">You voted</div>

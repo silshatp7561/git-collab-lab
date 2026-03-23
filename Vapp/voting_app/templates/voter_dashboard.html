@@ -30,13 +30,6 @@
             border-radius:10px;padding:16px 18px;font-size:30px;font-weight:600;
         }
         .election-link:hover{background:#eef4fc;border-color:#0b5cad}
-        .election-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
-        .badge{
-            display:inline-block;border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700;
-        }
-        .badge.active{background:#dcfce7;color:#166534}
-        .badge.inactive{background:#e2e8f0;color:#334155}
-        .badge.completed{background:#dbeafe;color:#1d4ed8}
         .empty{font-size:24px;color:#64748b}
         @media(max-width:980px){
             .navbar{padding:0 16px}
@@ -72,18 +65,7 @@
         {% if active_elections %}
             <div class="election-list">
                 {% for election in active_elections %}
-                    <a class="election-link" href="{% url 'view_election' election.id %}">
-                        <span class="election-row">
-                            <span>{{ election.name }}</span>
-                            {% if election.is_completed %}
-                                <span class="badge completed">Completed</span>
-                            {% elif election.is_active %}
-                                <span class="badge active">Active</span>
-                            {% else %}
-                                <span class="badge inactive">Inactive</span>
-                            {% endif %}
-                        </span>
-                    </a>
+                    <a class="election-link" href="{% url 'view_election' election.id %}">{{ election.name }}</a>
                 {% endfor %}
             </div>
         {% else %}
