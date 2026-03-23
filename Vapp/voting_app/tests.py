@@ -172,7 +172,6 @@ class AdminTests(TestCase):
     def test_create_post_post_invalid(self):
         """Test invalid POST (missing fields) does not create."""
         initial_count = Post.objects.count()
-        # View crashes on get(election_id=None), test that no Post created despite error
         with self.assertRaises((Election.DoesNotExist, IntegrityError)):
             self.client.post(reverse("create_post"), {})
         self.assertEqual(Post.objects.count(), initial_count)
