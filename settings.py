@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'voting_app',
+
+    'voting_app',   # ✅ ADD THIS
 ]
 
 MIDDLEWARE = [
@@ -116,4 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Admin Configuration
+ADMIN_WALLET_ADDRESS = "0xadmin1234567890abcdef1234567890abcdef12345678"
 
