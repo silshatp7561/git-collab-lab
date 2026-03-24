@@ -2,12 +2,15 @@ import hashlib
 import secrets
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.hashers import check_password, make_password
 from django.db import transaction
 from django.db.models import Count, Sum
 from django.views.decorators.http import require_POST
+from django.conf import settings
 
-from .models import Block, Candidate, Election, Post, Voter
+from .models import Block, Candidate, Election, Post, PublishedResult, Voter
+from .smart_contract import clear_published_results, publish_results_with_contract
 
 
 def generate_wallet():
@@ -20,20 +23,88 @@ def register_voter(request):
     request.session['show_navbar'] = True
 
     if request.method == "POST":
-        wallet = generate_wallet()
+        email = (request.POST.get("email") or "").strip().lower()
+        password = request.POST.get("password") or ""
 
+        if not email or not password:
+            return render(request, "register.html", {
+                "registered": False,
+                "error": "Email and password are required.",
+            })
+
+        if Voter.objects.filter(email__iexact=email).exists():
+            return render(request, "register.html", {
+                "registered": False,
+                "error": "This email is already registered. Please login.",
+                "email": email,
+            })
+
+        wallet = generate_wallet()
         # Save voter in database
-        Voter.objects.create(wallet_address=wallet)
+        Voter.objects.create(
+            email=email,
+            password_hash=make_password(password),
+            wallet_address=wallet
+        )
 
         # Show the register page with registered flag so template shows Login
         return render(request, "register.html", {
             "registered": True,
-            "wallet": wallet
+            "wallet": wallet,
+            "email": email,
         })
 
     # Ensure template gets a registered flag on GET (False) so the register
     # button is shown when appropriate.
     return render(request, "register.html", {"registered": False})
+
+
+def admin_login_view(request):
+    """Admin login view - authenticates using Django auth and constant wallet address."""
+    if request.user.is_authenticated and request.user.is_staff:
+        return redirect('admin_dashboard')
+    
+    request.session['show_navbar'] = True
+
+    if request.method == "POST":
+        email = (request.POST.get("email") or "").strip()
+        password = request.POST.get("password") or ""
+
+        # Authenticate using Django's auth system
+        user = authenticate(request, username=email, password=password)
+        
+        if user is not None and user.is_staff:
+            # Check if the user has the correct wallet address (constant)
+            expected_wallet = getattr(settings, 'ADMIN_WALLET_ADDRESS', None)
+            
+            if expected_wallet:
+                # Set admin session
+                login(request, user)
+                request.session['admin_wallet'] = expected_wallet
+                request.session['is_admin'] = True
+                return redirect('admin_dashboard')
+            else:
+                return render(request, "admin_login.html", {
+                    'error': "Admin wallet address not configured."
+                })
+        else:
+            return render(request, "admin_login.html", {
+                'error': "Invalid admin credentials."
+            })
+
+    return render(request, "admin_login.html")
+
+
+def custom_staff_required(view_func):
+    """Custom decorator that checks for admin session."""
+    def wrapper(request, *args, **kwargs):
+        if not request.session.get('is_admin') or not request.user.is_authenticated:
+            return redirect('admin_login')
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
+
+
 
 
 
@@ -64,14 +135,146 @@ def approve_voter(request, voter_id):
     voter.save()
     return redirect('admin_dashboard')
 
+@staff_member_required(login_url='admin:login')
+@require_POST
+def remove_voter(request, voter_id):
+    voter = get_object_or_404(Voter, id=voter_id)
+    voter.delete()
+    return redirect('admin_dashboard')
+
 
 @staff_member_required(login_url='admin:login')
 @require_POST
 def toggle_election(request, election_id):
     election = get_object_or_404(Election, id=election_id)
     election.is_active = not election.is_active
-    election.save()
+    election.save(update_fields=['is_active'])
+
+    # Reopen => clear published snapshot. Deactivate => auto count and publish.
+    if election.is_active:
+        clear_published_results(election)
+    else:
+        publish_results_with_contract(election)
     return redirect('admin_dashboard')
+
+
+@staff_member_required(login_url='admin:login')
+@require_POST
+def mark_completed(request, election_id):
+    """Mark the election as completed (voting phase finished)"""
+    election = get_object_or_404(Election, id=election_id)
+    election.voting_completed = True
+    election.save(update_fields=['voting_completed'])
+    return redirect('admin_dashboard')
+
+
+@staff_member_required(login_url='admin:login')
+@require_POST
+def publish_results(request, election_id):
+    """Publish the election results by executing the smart contract"""
+    election = get_object_or_404(Election, id=election_id)
+    # Execute smart contract to count and publish results
+    publish_results_with_contract(election)
+    # Ensure results are visible
+    election.results_hidden = False
+    election.save(update_fields=['results_hidden'])
+    return redirect('admin_dashboard')
+
+
+@staff_member_required(login_url='admin:login')
+@require_POST
+def hide_results(request, election_id):
+    """Hide the election results from public view"""
+    election = get_object_or_404(Election, id=election_id)
+    election.results_hidden = True
+    election.results_published = False
+    election.save(update_fields=['results_hidden', 'results_published'])
+    return redirect('admin_dashboard')
+
+
+def _count_votes_from_blockchain(selected_election):
+    published_rows = PublishedResult.objects.filter(election=selected_election).select_related(
+        "candidate", "candidate__post"
+    )
+    if published_rows.exists():
+        results = []
+        for row in published_rows:
+            results.append({
+                "candidate_id": row.candidate_id,
+                "candidate__name": row.candidate.name,
+                "candidate__post__name": row.candidate.post.name,
+                "candidate__department": row.candidate.department,
+                "candidate__semester": row.candidate.semester,
+                "total_votes": row.total_votes,
+            })
+        results.sort(
+            key=lambda r: (
+                r["candidate__post__name"],
+                -r["total_votes"],
+                r["candidate__name"],
+                r["candidate_id"],
+            )
+        )
+    else:
+        vote_rows = Block.objects.filter(candidate__post__election=selected_election)
+        results = vote_rows.values(
+            'candidate_id',
+            'candidate__name',
+            'candidate__post__name',
+            'candidate__department',
+            'candidate__semester',
+        ).annotate(total_votes=Count('id')).order_by(
+            'candidate__post__name', '-total_votes', 'candidate__name', 'candidate_id'
+        )
+
+    ranked_results = []
+    current_post = None
+    last_votes = None
+    current_rank = 0
+
+    for row in results:
+        post_name = row['candidate__post__name']
+        votes = row['total_votes']
+
+        if post_name != current_post:
+            current_post = post_name
+            last_votes = None
+            current_rank = 0
+
+        if votes != last_votes:
+            current_rank += 1
+            last_votes = votes
+
+        row['rank'] = current_rank
+        ranked_results.append(row)
+
+    total_votes = sum(row['total_votes'] for row in ranked_results)
+    candidate_count = len(ranked_results)
+    distribution = sorted(ranked_results, key=lambda row: (-row['total_votes'], row['candidate__name']))
+    leading_candidate = distribution[0] if distribution else None
+
+    for row in ranked_results:
+        row['percentage'] = round((row['total_votes'] / total_votes) * 100) if total_votes else 0
+    for row in distribution:
+        row['percentage'] = round((row['total_votes'] / total_votes) * 100) if total_votes else 0
+
+    leaders_by_post = []
+    post_groups = {}
+    for row in ranked_results:
+        post_name = row['candidate__post__name']
+        post_groups.setdefault(post_name, []).append(row)
+
+    for post_name, rows in post_groups.items():
+        top_votes = rows[0]['total_votes'] if rows else 0
+        leaders = [r for r in rows if r['total_votes'] == top_votes]
+        leaders_by_post.append({
+            'post_name': post_name,
+            'leaders': leaders,
+            'top_votes': top_votes,
+        })
+
+    return ranked_results, distribution, total_votes, candidate_count, leading_candidate, leaders_by_post
+
 
 def home(request):
     return render(request, "home.html")
@@ -147,23 +350,28 @@ def voter_login(request):
     request.session['show_navbar'] = True
 
     if request.method == "POST":
-        wallet = request.POST.get("wallet")
+        email = (request.POST.get("email") or "").strip().lower()
+        password = request.POST.get("password") or ""
+        wallet = (request.POST.get("wallet") or "").strip()
 
-        try:
-            voter = Voter.objects.get(wallet_address=wallet)
-
-            if voter.approved:
-                request.session['wallet'] = wallet
-                return redirect('voter_dashboard')
-            else:
-                return render(request, 'voter_login.html', {
-                    'error': "Your account is not approved by admin."
-                })
-
-        except Voter.DoesNotExist:
+        voter = Voter.objects.filter(email__iexact=email, wallet_address=wallet).first()
+        if not voter:
             return render(request, 'voter_login.html', {
-                'error': "Wallet address not found."
+                'error': "Invalid credentials. Check email, password, and wallet address."
             })
+
+        if not check_password(password, voter.password_hash):
+            return render(request, 'voter_login.html', {
+                'error': "Invalid credentials. Check email, password, and wallet address."
+            })
+
+        if voter.approved:
+            request.session['wallet'] = wallet
+            return redirect('voter_dashboard')
+
+        return render(request, 'voter_login.html', {
+            'error': "Your account is not approved by admin."
+        })
 
     return render(request, 'voter_login.html')
 
@@ -261,57 +469,41 @@ def results_view(request):
     if not selected_election:
         selected_election = elections.filter(is_active=True).first() or elections.first()
 
-    vote_rows = Block.objects.all()
-    if selected_election:
-        vote_rows = vote_rows.filter(candidate__post__election=selected_election)
+    can_view_results = bool(
+        selected_election and
+        (not selected_election.is_active) and
+        selected_election.results_published and
+        not selected_election.results_hidden
+    )
 
-    # Count votes per candidate
-    results = vote_rows.values(
-        'candidate_id',
-        'candidate__name',
-        'candidate__post__name',
-        'candidate__department',
-        'candidate__semester',
-    ).annotate(total_votes=Count('id')).order_by('candidate__post__name', '-total_votes', 'candidate__name', 'candidate_id')
-
-    # Add rank per post (same votes share same rank)
     ranked_results = []
-    current_post = None
-    last_votes = None
-    current_rank = 0
+    distribution = []
+    total_votes = 0
+    candidate_count = 0
+    leading_candidate = None
+    results_block_reason = ""
 
-    for row in results:
-        post_name = row['candidate__post__name']
-        votes = row['total_votes']
+    # Check voting_completed first - show message when voting is completed but results not published
+    if selected_election and selected_election.voting_completed and not selected_election.results_published:
+        results_block_reason = "The voting is completed and the result will be published soon."
+    elif selected_election and selected_election.is_active:
+        results_block_reason = "Results are hidden while the election is active."
+    elif selected_election and not selected_election.results_published:
+        results_block_reason = "Results are not published yet. Admin must mark the election as completed and then publish the results."
 
-        if post_name != current_post:
-            current_post = post_name
-            last_votes = None
-            current_rank = 0
-
-        if votes != last_votes:
-            current_rank += 1
-            last_votes = votes
-
-        row['rank'] = current_rank
-        ranked_results.append(row)
-
-    total_votes = sum(row['total_votes'] for row in ranked_results)
-    candidate_count = len(ranked_results)
-    distribution = sorted(ranked_results, key=lambda row: (-row['total_votes'], row['candidate__name']))
-    leading_candidate = distribution[0] if distribution else None
-
-    for row in ranked_results:
-        row['percentage'] = round((row['total_votes'] / total_votes) * 100) if total_votes else 0
-    for row in distribution:
-        row['percentage'] = round((row['total_votes'] / total_votes) * 100) if total_votes else 0
+    leaders_by_post = []
+    if can_view_results:
+        ranked_results, distribution, total_votes, candidate_count, leading_candidate, leaders_by_post = _count_votes_from_blockchain(selected_election)
 
     return render(request, 'results.html', {
+        'can_view_results': can_view_results,
+        'results_block_reason': results_block_reason,
         'results': ranked_results,
         'distribution': distribution,
         'total_votes': total_votes,
         'candidate_count': candidate_count,
         'leading_candidate': leading_candidate,
+        'leaders_by_post': leaders_by_post,
         'elections': elections,
         'selected_election': selected_election,
     })    

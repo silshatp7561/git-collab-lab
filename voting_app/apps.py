@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class VotingAppConfig(AppConfig):
-    name = 'voting_app'
+   name = 'voting_app'

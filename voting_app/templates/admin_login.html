@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login - BlockVote</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cormorant Garamond', serif; }
+        body { background: #f5f7fa; }
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 60px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-weight: 700; font-size: 20px; }
+        .nav-links a { text-decoration: none; color: #1e293b; margin-left: 25px; font-weight: 500; }
+        .container { margin: 80px; display: flex; justify-content: center; }
+        .card {
+            background: white; padding: 40px; border-radius: 12px;
+            width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        h2 { text-align: center; margin-bottom: 25px; }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #cbd5e1; border-radius: 6px;
+        }
+        button {
+            width: 100%; padding: 12px; background: #2563eb;
+            color: white; border: none; border-radius: 8px;
+            font-weight: 600; cursor: pointer;
+        }
+        button:hover { background: #1e40af; }
+        .error { color: #dc2626; margin-bottom: 15px; text-align: center; }
+        .voter-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #475569;
+        }
+        .voter-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .voter-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">BlockVote</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h2>Admin Login</h2>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Enter Admin Email" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <button type="submit">Login</button>
+            
+            <div class="voter-link">
+                Are you a voter? <a href="{% url 'voter_login' %}">Login as Voter</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
